@@ -145,7 +145,7 @@ with left_col:
             plot_bgcolor='rgba(0,0,0,0)',
         
         )
-        # st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, use_container_width=True)
 
     st.markdown("### 📦 Portfolio Holdings")
     if current_alloc:
