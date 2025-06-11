@@ -108,79 +108,89 @@ def backtest(prices, returns, regime_df, allocations):
 
 # === RUN BACKTEST ===
 # === CURRENT REGIME & ALLOCATION PIE CHART ===
-st.subheader("🧭 Current Regime Allocation")
+# === BACKTEST PORTFOLIO RETURNS ===
+portfolio_returns = backtest(prices, returns, regime_df, allocations)
 
-# Get the latest known regime
-latest_date = regime_df.index[-1]
-current_regime = regime_df.loc[latest_date, "regime"]
+# === HEADER ===
+st.markdown(
+    "<h1 style='text-align: center; font-family: serif; font-size: 48px;'>📰 Regime Report</h1>"
+    "<h3 style='text-align: center; font-weight: 300;'>Asset Allocation in Current Market Conditions</h3>",
+    unsafe_allow_html=True
+)
 
-if current_regime in allocations:
-    current_alloc = allocations[current_regime]
+st.markdown("---")
 
-    # Create interactive pie chart with Plotly
-    # === CUSTOMIZED PIE CHART FOR CURRENT ALLOCATION ===
-st.subheader("📊 Allocation %")
+# === TWO COLUMN LAYOUT ===
+left_col, right_col = st.columns([1, 1])
 
-latest_date = regime_df.index[-1]
-current_regime = regime_df.loc[latest_date, "regime"]
+with left_col:
+    st.subheader("📊 Allocation for Current Regime")
+    st.markdown(f"**Current Regime:** {current_regime}")
 
-if current_regime in allocations:
-    current_alloc = allocations[current_regime]
+    # PIE CHART
+    if current_regime in allocations:
+        current_alloc = allocations[current_regime]
 
-    # Set custom colors (adjust as needed)
-    custom_colors = {
-        "stocks": "#00bf63",       # green
-        "stablecoins": "#ff5757",  # light red
-        "cash": "#ff3131",         # red
-        "crypto": "#25a159",       # light green
-        "gold": "#f4b70f",  # yellow
-    }
+        custom_colors = {
+            "stocks": "#00bf63",
+            "stablecoins": "#ff5757",
+            "cash": "#ff3131",
+            "crypto": "#25a159",
+            "gold": "#f4b70f",
+        }
 
-    fig_pie = px.pie(
-        names=list(current_alloc.keys()),
-        values=list(current_alloc.values()),
-        hole=0.0,
-        title="ALLOCATION %",
-        color=list(current_alloc.keys()),
-        color_discrete_map=custom_colors
-    )
+        fig_pie = px.pie(
+            names=list(current_alloc.keys()),
+            values=list(current_alloc.values()),
+            hole=0.0,
+            title="ALLOCATION %",
+            color=list(current_alloc.keys()),
+            color_discrete_map=custom_colors
+        )
 
-    fig_pie.update_traces(
-        textinfo='percent',
-        textfont_size=16,
-        pull=[0.03] * len(current_alloc)  # slightly "explode" all slices
-    )
+        fig_pie.update_traces(
+            textinfo='percent',
+            textfont_size=16,
+            pull=[0.03] * len(current_alloc)
+        )
 
-    fig_pie.update_layout(
-        title_font_size=24,
-        showlegend=True,
-        legend=dict(orientation="h", y=-0.2),
-        paper_bgcolor='rgba(0,0,0,0)',  # transparent background
-        plot_bgcolor='rgba(0,0,0,0)',
-    )
+        fig_pie.update_layout(
+            title_font_size=24,
+            showlegend=True,
+            legend=dict(orientation="h", y=-0.2),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+        )
 
-    left, _ = st.columns([2, 1])
-    with left:
         st.plotly_chart(fig_pie, use_container_width=True)
-else:
-    st.warning(f"No allocation found for regime: {current_regime}")
 
+    else:
+        st.warning(f"No allocation found for regime: {current_regime}")
 
+    # METRICS
+    st.subheader("📈 Portfolio Performance")
+    metrics = compute_metrics(portfolio_returns.dropna())
+    st.write(
+        pd.DataFrame(metrics, index=["Value"]).T.style.format("{:.2%}")
+    )
 
-# === METRICS ===
-def compute_metrics(rets):
-    mean_daily = rets.mean()
-    std_daily = rets.std()
-    cagr = (1 + mean_daily) ** 252 - 1
-    volatility = std_daily * np.sqrt(252)
-    sharpe = (mean_daily / std_daily) * np.sqrt(252)
-    drawdown = (1 + rets).cumprod().div((1 + rets).cumprod().cummax()) - 1
-    max_dd = drawdown.min()
-    return {
-        "CAGR": cagr,
-        "Volatility": volatility,
-        "Sharpe Ratio": sharpe,
-        "Max Drawdown": max_dd
-    }
+    # OUTPERFORMANCE
+    sp500 = yf.download("SPY", start=START_DATE, end=END_DATE)["Adj Close"].pct_change().dropna()
+    sp500_cum = (1 + sp500).cumprod()
+    portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
+
+    outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
+    st.metric(label="📊 Outperformance vs S&P 500", value=f"{outperformance:.2%}")
+
+with right_col:
+    st.subheader("🧠 Interpretation of Data")
+    interp = st.text_area("What are we seeing in the macro environment?", height=150)
+
+    st.subheader("🔭 Personal Outlook")
+    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=150)
+
+    st.subheader("✅ Conclusion")
+    conclusion = st.text_area("Summarize your view and suggested action", height=100)
+
 
 
