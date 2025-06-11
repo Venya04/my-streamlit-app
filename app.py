@@ -38,8 +38,10 @@ def load_prices():
             df = yf.download(ticker, start=START_DATE, end=END_DATE, progress=False)
             df = df["Adj Close"] if "Adj Close" in df.columns else df["Close"]
             data[asset] = df
-    prices = pd.concat(data.values(), axis=1)
-    prices.columns = [k for k in data.keys() if data[k] is not None]
+   prices = pd.concat(data.values(), axis=1)
+column_names = [k if k != "gold" else "commodities" for k in data.keys() if data[k] is not None]
+prices.columns = column_names
+
     return prices.dropna()
 
 prices = load_prices()
