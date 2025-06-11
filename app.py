@@ -153,9 +153,9 @@ with left_col:
     metrics = compute_metrics(portfolio_returns.dropna())
     st.write(
         pd.DataFrame(metrics, index=["Value"]).T.style.format({
-            "CAGR": "{:.2%}",
-            "Volatility": "{:.2%}",
-            "Max Drawdown": "{:.2%}",
+            "CAGR": "{:.2}",
+            "Volatility": "{:.2}",
+            "Max Drawdown": "{:.2}",
             "Sharpe Ratio": "{:.2f}"
         })
     )
