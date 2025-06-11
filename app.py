@@ -123,7 +123,7 @@ with left_col:
         )
         fig_pie.update_traces(
             textinfo='percent',
-            textfont_size=20,
+            textfont_size=24,
             pull=[0.03] * len(current_alloc)
         )
         fig_pie.update_layout(
@@ -132,8 +132,8 @@ with left_col:
             legend=dict(orientation="h", y=-0.2),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            height=700,  # Increase this
-            width=700,
+            height=1000,  # Increase this
+            width=1000,
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
