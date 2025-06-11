@@ -177,12 +177,6 @@ with left_col:
     if current_alloc:
         for asset, weight in current_alloc.items():
             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
-📦 Portfolio Holdings
-- Stocks: 54.4%
-- Stablecoins: 18.7%
-- Cash: 18.7%
-- Crypto: 8.3%
-- Commodities: 0.0%
 
 
 
