@@ -20,7 +20,7 @@ TICKERS = {
 
 st.set_page_config(
     page_title="Regime Report",
-    layout="centered"  # or "wide" if already optimized
+    layout="wide"  # or "wide" if already optimized
 )
 
 
