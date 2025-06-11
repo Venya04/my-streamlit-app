@@ -18,23 +18,7 @@ TICKERS = {
     "cash": None
 }
 
-st.set_page_config(
-    page_title="Regime Report",
-    layout="wide"  # or "wide" if already optimized
-)
-
-
-# === CUSTOM STYLES ===
-st.markdown("""
-    <style>
-        html, body, [class*="css"]  {
-            font-family: 'Georgia', serif !important;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Georgia', serif;
-        }
-    </style>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="Regime Report", layout="wide")
 
 # === LOAD PRICE DATA ===
 @st.cache_data
@@ -53,7 +37,8 @@ def load_prices():
             df = df["Adj Close"] if "Adj Close" in df.columns else df["Close"]
             data[asset] = df
     prices = pd.concat(data.values(), axis=1)
-    prices.columns = [k for k in data.keys() if data[k] is not None]
+    column_names = [k for k in data.keys() if data[k] is not None]
+    prices.columns = column_names
     return prices.dropna()
 
 prices = load_prices()
@@ -108,14 +93,17 @@ current_regime = regime_df.loc[latest_date, "regime"]
 current_alloc = allocations.get(current_regime, {})
 
 # === HEADER ===
-st.markdown("""
-    <h1 style='text-align: center; font-family: Georgia, serif; font-size: 60px; font-weight: 900; letter-spacing: 1.5px;'>🗞️ The Regime Report</h1>
-    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; font-weight: 400;'>Asset Allocation in Current Market Conditions</h3>
-""", unsafe_allow_html=True)
-
+st.markdown(
+    """
+    <h1 style='text-align: center; font-family: Times New Roman, serif; font-size: 48px;'>The Regime Report</h1>
+    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic;'>Asset Allocation in Current Market Conditions</h3>
+    """,
+    unsafe_allow_html=True
+)
 st.markdown("---")
 
-left_col, right_col = st.columns([3, 2])
+# === MAIN BODY ===
+left_col, right_col = st.columns([2, 2])
 
 with left_col:
     st.subheader("Allocation for Current Regime")
@@ -137,36 +125,40 @@ with left_col:
         )
         fig_pie.update_traces(
             textinfo='percent',
-            textfont_size=20,
-            pull=[0.04] * len(current_alloc)
+            textfont_size=16,
+            pull=[0.03] * len(current_alloc)
         )
         fig_pie.update_layout(
-            width=500,
-            height=500,
+            title=None,
             showlegend=False,
-            # legend=dict(orientation="h", y=-0.2),
-            # paper_bgcolor='rgba(0,0,0,0)',
-            # plot_bgcolor='rgba(0,0,0,0)',
-        
+            width=400,
+            height=400,
+            margin=dict(l=0, r=0, t=0, b=0),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
         )
-        st.plotly_chart(fig_pie, use_container_width=True)
-
-
-    st.markdown("### Portfolio Holdings")
-    if current_alloc:
-        for asset, weight in current_alloc.items():
-            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+        st.plotly_chart(fig_pie, use_container_width=False)
 
 with right_col:
     st.subheader("Interpretation of Data")
-    interp = st.text_area("What are we seeing in the macro environment?", height=200)
+    interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
     st.subheader("Personal Outlook")
-    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=200)
+    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=130)
 
+# === PORTFOLIO HOLDINGS ===
+st.markdown("---")
+st.subheader("Portfolio Holdings")
+if current_alloc:
+    cols = st.columns([1, 1])
+    with cols[0]:
+        for i, (asset, weight) in enumerate(current_alloc.items()):
+            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
+# === CONCLUSION ===
 st.markdown("---")
 st.subheader("Conclusion")
-conclusion = st.text_area("Summarize your view and suggested action", height=300)
+conclusion = st.text_area("Summarize your view and suggested action", height=100)
 
 
 
