@@ -115,7 +115,7 @@ left_col, right_col = st.columns([2, 1])
 
 with left_col:
     st.subheader("Allocation for Current Regime")
-    # st.markdown(f"**Current Regime:** {current_regime}")
+    st.markdown(f"**Current Regime:** {current_regime}")
 
     if current_alloc:
         fig_pie = px.pie(
@@ -146,7 +146,7 @@ with left_col:
         
         )
         st.plotly_chart(fig_pie, use_container_width=True)
-st.markdown(f"**Current Regime:** {current_regime}")
+
 
     st.markdown("### Portfolio Holdings")
     if current_alloc:
