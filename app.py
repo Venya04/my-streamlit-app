@@ -95,21 +95,32 @@ current_alloc = allocations.get(current_regime, {})
 # === HEADER ===
 st.markdown(
     """
-    <h1 style='text-align: center; font-family: Times New Roman, serif; font-size: 48px;'>The Regime Report</h1>
-    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic;'>Asset Allocation in Current Market Conditions</h3>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    .gothic-title {
+        font-family: 'UnifrakturCook', serif;
+        text-align: center;
+        font-size: 60px;
+        font-weight: bold;
+        padding: 0.5rem 0;
+        letter-spacing: 1px;
+    }
+    </style>
+    <div class='gothic-title'>The Regime Report</div>
+    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
+        Asset Allocation in Current Market Conditions
+    </h3>
     """,
     unsafe_allow_html=True
 )
 st.markdown("---")
 
 # === MAIN BODY ===
-# Split left side into pie chart and holdings side-by-side
-# === MAIN BODY LAYOUT ===
-left_col, right_col = st.columns([3, 2])  # Wider left for pie/holdings
+left_col, right_col = st.columns([2, 1])
 
-# Inside left_col, split into pie and holdings
 with left_col:
-    pie_col, holdings_col = st.columns([2, 1])  # Pie and holdings side-by-side
+    pie_col, holdings_col = st.columns([2, 1])
 
     with pie_col:
         if current_alloc:
@@ -145,28 +156,16 @@ with left_col:
         for asset, weight in current_alloc.items():
             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
-
-
 with right_col:
     st.subheader("Interpretation of Data")
-    interp = st.text_area("What are we seeing in the macro environment?", height=200)
+    interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
     st.subheader("Personal Outlook")
-    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=200)
+    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=130)
 
-# === PORTFOLIO HOLDINGS ===
-# st.markdown("---")
-# st.subheader("Portfolio Holdings")
-# if current_alloc:
-#     cols = st.columns([1, 1])
-#     with cols[0]:
-#         for i, (asset, weight) in enumerate(current_alloc.items()):
-#             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
-
-# === CONCLUSION ===
 st.markdown("---")
 st.subheader("Conclusion")
-conclusion = st.text_area("Summarize your view and suggested action", height=400)
+conclusion = st.text_area("Summarize your view and suggested action", height=100)
 
 
 
