@@ -135,44 +135,55 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    st.subheader("\U0001F4C8 Portfolio Performance")
-    def compute_metrics(rets):
-        mean_daily = rets.mean()
-        std_daily = rets.std()
-        cagr = (1 + mean_daily) ** 252 - 1
-        volatility = std_daily * np.sqrt(252)
-        sharpe = (mean_daily / std_daily) * np.sqrt(252)
-        drawdown = (1 + rets).cumprod().div((1 + rets).cumprod().cummax()) - 1
-        max_dd = drawdown.min()
-        return {
-            "CAGR": cagr,
-            "Volatility": volatility,
-            "Sharpe Ratio": sharpe,
-            "Max Drawdown": max_dd
-        }
-    metrics = compute_metrics(portfolio_returns.dropna())
-    st.write(
-        pd.DataFrame(metrics, index=["Value"]).T.style.format({
-            "CAGR": "{:.2%}",
-            "Volatility": "{:.2%}",
-            "Max Drawdown": "{:.2%}",
-            "Sharpe Ratio": "{:.2f}"
-        })
-    )
+#     st.subheader("\U0001F4C8 Portfolio Performance")
+#     def compute_metrics(rets):
+#         mean_daily = rets.mean()
+#         std_daily = rets.std()
+#         cagr = (1 + mean_daily) ** 252 - 1
+#         volatility = std_daily * np.sqrt(252)
+#         sharpe = (mean_daily / std_daily) * np.sqrt(252)
+#         drawdown = (1 + rets).cumprod().div((1 + rets).cumprod().cummax()) - 1
+#         max_dd = drawdown.min()
+#         return {
+#             "CAGR": cagr,
+#             "Volatility": volatility,
+#             "Sharpe Ratio": sharpe,
+#             "Max Drawdown": max_dd
+#         }
+#     metrics = compute_metrics(portfolio_returns.dropna())
+#     st.write(
+#         pd.DataFrame(metrics, index=["Value"]).T.style.format({
+#             "CAGR": "{:.2%}",
+#             "Volatility": "{:.2%}",
+#             "Max Drawdown": "{:.2%}",
+#             "Sharpe Ratio": "{:.2f}"
+#         })
+#     )
 
-    sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
-sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
-sp500 = sp500_series.pct_change().dropna()
-sp500_cum = (1 + sp500).cumprod()
-portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
+#     sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
+# sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
+# sp500 = sp500_series.pct_change().dropna()
+# sp500_cum = (1 + sp500).cumprod()
+# portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
 
-try:
-    outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
-    outperformance_value = outperformance.item() if hasattr(outperformance, "item") else outperformance
+# try:
+#     outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
+#     outperformance_value = outperformance.item() if hasattr(outperformance, "item") else outperformance
 
-    st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance_value:.2%}")
-except Exception as e:
-    st.warning(f"Not enough data to calculate S&P 500 outperformance.\nError: {e}")
+#     st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance_value:.2%}")
+# except Exception as e:
+#     st.warning(f"Not enough data to calculate S&P 500 outperformance.\nError: {e}")
+    st.subheader("📦 Portfolio Holdings")
+    if current_alloc:
+        for asset, weight in current_alloc.items():
+            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+📦 Portfolio Holdings
+- Stocks: 54.4%
+- Stablecoins: 18.7%
+- Cash: 18.7%
+- Crypto: 8.3%
+- Commodities: 0.0%
+
 
 
 with right_col:
