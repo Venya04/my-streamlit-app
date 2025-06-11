@@ -103,12 +103,10 @@ st.markdown(
 st.markdown("---")
 
 # === MAIN BODY ===
-left_col, right_col = st.columns([2, 2])
+# Split left side into pie chart and holdings side-by-side
+pie_col, holdings_col = left_col.columns([2, 1])  # 2:1 ratio for wider pie
 
-with left_col:
-    st.subheader("Allocation for Current Regime")
-    st.markdown(f"**Current Regime:** {current_regime}")
-
+with pie_col:
     if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
@@ -126,18 +124,22 @@ with left_col:
         fig_pie.update_traces(
             textinfo='percent',
             textfont_size=16,
-            pull=[0.03] * len(current_alloc)
+            pull=[0.03] * len(current_alloc),
+            marker=dict(line=dict(color="#000000", width=2))  # outline for old-style contrast
         )
         fig_pie.update_layout(
-            title=None,
             showlegend=False,
-            width=400,
-            height=400,
-            margin=dict(l=0, r=0, t=0, b=0),
+            margin=dict(t=10, b=10, l=10, r=10),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
         )
-        st.plotly_chart(fig_pie, use_container_width=False)
+        st.plotly_chart(fig_pie, use_container_width=True)
+
+with holdings_col:
+    st.markdown("### Portfolio Holdings")
+    for asset, weight in current_alloc.items():
+        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
 
 with right_col:
     st.subheader("Interpretation of Data")
