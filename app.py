@@ -14,7 +14,7 @@ CASH_DAILY_YIELD = 0.045 / 12
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
-    "commodities": "GLD",
+    "gold": "GLD",
     "cash": None
 }
 
@@ -133,7 +133,7 @@ if current_regime in allocations:
         "stablecoins": "#ff5757",  # light red
         "cash": "#ff3131",         # red
         "crypto": "#25a159",       # light green
-        "commodities": "#f4b70f",  # yellow
+        "gold": "#f4b70f",  # yellow
     }
 
     fig_pie = px.pie(
