@@ -151,19 +151,15 @@ with left_col:
             "Max Drawdown": max_dd
         }
     metrics = compute_metrics(portfolio_returns.dropna())
-  # === Performance Table ===
-st.subheader("📈 Portfolio Performance")
-metrics = compute_metrics(portfolio_returns.dropna())
-st.write(
-    pd.DataFrame(metrics, index=["Value"]).T.style.format({
-        "CAGR": "{:.2%}",
-        "Volatility": "{:.2%}",
-        "Max Drawdown": "{:.2%}",
-        "Sharpe Ratio": "{:.2f}"
-    })
-)
+    st.write(
+        pd.DataFrame(metrics, index=["Value"]).T.style.format({
+            "CAGR": "{:.2%}",
+            "Volatility": "{:.2%}",
+            "Max Drawdown": "{:.2%}",
+            "Sharpe Ratio": "{:.2f}"
+        })
+    )
 
- # === Outperformance ===
     sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
     sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
     sp500 = sp500_series.pct_change().dropna()
@@ -172,15 +168,9 @@ st.write(
     outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
 
     if pd.notna(outperformance):
-        st.metric(label="📊 Outperformance vs S&P 500", value=f"{outperformance:.2%}")
+        st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance:.2%}")
     else:
         st.warning("Not enough data to calculate S&P 500 outperformance.")
-
-if pd.notna(outperformance):
-    st.metric(label="📊 Outperformance vs S&P 500", value=f"{outperformance:.2%}")
-else:
-    st.warning("Not enough data to calculate S&P 500 outperformance.")
-
 
 with right_col:
     st.subheader("\U0001F9E0 Interpretation of Data")
@@ -191,6 +181,4 @@ with right_col:
 
     st.subheader("\u2705 Conclusion")
     conclusion = st.text_area("Summarize your view and suggested action", height=100)
-
-
 
