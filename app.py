@@ -14,10 +14,10 @@ CASH_DAILY_YIELD = 0.045 / 12
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
-    "gold": "GLD",
-    "commodities": "GLD",  # map commodities to gold if that’s your intention
+    "commodities": "GLD",  # ✅ use commodities, not gold
     "cash": None
 }
+
 
 
 st.set_page_config(page_title="Regime Report", layout="wide")
@@ -115,13 +115,14 @@ with left_col:
             hole=0.0,
             title="ALLOCATION %",
             color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#00bf63",
-                "stablecoins": "#ff5757",
-                "cash": "#ff3131",
-                "crypto": "#25a159",
-                "commodities": "#f4b70f",
-            }
+          color_discrete_map={
+    "stocks": "#00bf63",
+    "stablecoins": "#ff5757",
+    "cash": "#ff3131",
+    "crypto": "#25a159",
+    "commodities": "#f4b70f",  # ✅ now matched to GLD
+}
+
         )
         fig_pie.update_traces(
             textinfo='percent',
