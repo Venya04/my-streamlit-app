@@ -23,8 +23,13 @@ st.title("📈 Regime-Based Investment Strategy Dashboard")
 
 # === LOAD PRICE DATA ===
 st.sidebar.header("Data Settings")
-regime_file = st.sidebar.file_uploader("Upload Regime Labels CSV", type="csv")
-alloc_file = st.sidebar.file_uploader("Upload Optimal Allocations CSV", type="csv")
+@st.cache_data
+def load_csv_from_repo(path):
+    return pd.read_csv(path, parse_dates=["date"] if "regime" in path else None)
+
+regime_df = load_csv_from_repo("regime_labels.csv")
+opt_alloc_df = load_csv_from_repo("optimal_allocations.csv")
+
 
 @st.cache_data
 def load_prices():
@@ -44,12 +49,12 @@ prices = load_prices()
 if regime_file is not None:
     regime_df = pd.read_csv(regime_file, parse_dates=["date"])
 else:
-    st.stop()
+    # st.stop()
 
 if alloc_file is not None:
     opt_alloc_df = pd.read_csv(alloc_file)
 else:
-    st.stop()
+    # st.stop()
 
 regime_df.set_index("date", inplace=True)
 regime_df = regime_df.reindex(prices.index, method="ffill")
