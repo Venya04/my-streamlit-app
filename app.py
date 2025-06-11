@@ -132,6 +132,8 @@ with left_col:
             legend=dict(orientation="h", y=-0.2),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
+            height=500,  # Increase this
+            width=500,
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
