@@ -159,14 +159,14 @@ with left_col:
 
 with right_col:
     st.subheader("Interpretation of Data")
-    interp = st.text_area("What are we seeing in the macro environment?", height=300)
+    interp = st.text_area("What are we seeing in the macro environment?", height=200)
 
     st.subheader("Personal Outlook")
-    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=300)
+    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=200)
 
 st.markdown("---")
 st.subheader("Conclusion")
-conclusion = st.text_area("Summarize your view and suggested action", height=400)
+conclusion = st.text_area("Summarize your view and suggested action", height=300)
 
 
 
