@@ -14,9 +14,11 @@ CASH_DAILY_YIELD = 0.045 / 12
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
-    "commodities": "GLD",
+    "gold": "GLD",
+    "commodities": "GLD",  # map commodities to gold if that’s your intention
     "cash": None
 }
+
 
 st.set_page_config(page_title="Regime Report", layout="wide")
 
