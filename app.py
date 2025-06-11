@@ -155,13 +155,13 @@ with right_col:
     outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=130)
 
 # === PORTFOLIO HOLDINGS ===
-st.markdown("---")
-st.subheader("Portfolio Holdings")
-if current_alloc:
-    cols = st.columns([1, 1])
-    with cols[0]:
-        for i, (asset, weight) in enumerate(current_alloc.items()):
-            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+# st.markdown("---")
+# st.subheader("Portfolio Holdings")
+# if current_alloc:
+#     cols = st.columns([1, 1])
+#     with cols[0]:
+#         for i, (asset, weight) in enumerate(current_alloc.items()):
+#             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
 # === CONCLUSION ===
 st.markdown("---")
