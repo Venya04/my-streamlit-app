@@ -100,10 +100,10 @@ st.markdown(
 )
 st.markdown("---")
 
-left_col, right_col = st.columns([1, 1])
+left_col, right_col = st.columns([1.2, 1])
 
 with left_col:
-    st.subheader("\U0001F4CA Allocation for Current Regime")
+    st.subheader("📊 Allocation for Current Regime")
     st.markdown(f"**Current Regime:** {current_regime}")
 
     if current_alloc:
@@ -123,17 +123,19 @@ with left_col:
         )
         fig_pie.update_traces(
             textinfo='percent',
-            textfont_size=16,
+            textfont_size=18,   # slightly larger text
             pull=[0.03] * len(current_alloc)
         )
         fig_pie.update_layout(
-            title_font_size=24,
+            title_font_size=28,
+            height=500,  # make chart taller
+            width=500,   # make chart wider
             showlegend=True,
             legend=dict(orientation="h", y=-0.2),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
         )
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_pie, use_container_width=False)
 
     st.subheader("📦 Portfolio Holdings")
     if current_alloc:
@@ -141,13 +143,14 @@ with left_col:
             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
 with right_col:
-    st.subheader("\U0001F9E0 Interpretation of Data")
+    st.subheader("🧠 Interpretation of Data")
     interp = st.text_area("What are we seeing in the macro environment?", height=150)
 
-    st.subheader("\U0001F52D Personal Outlook")
+    st.subheader("⛏️ Personal Outlook")
     outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=150)
 
     st.subheader("✅ Conclusion")
     conclusion = st.text_area("Summarize your view and suggested action", height=100)
+
 
 
