@@ -104,7 +104,6 @@ st.markdown("---")
 left_col, right_col = st.columns([1, 1])
 
 with left_col:
-    st.subheader("\U0001F4CA Allocation for Current Regime")
     st.markdown(f"**Current Regime:** {current_regime}")
 
     if current_alloc:
@@ -124,7 +123,7 @@ with left_col:
         )
         fig_pie.update_traces(
             textinfo='percent',
-            textfont_size=16,
+            textfont_size=20,
             pull=[0.03] * len(current_alloc)
         )
         fig_pie.update_layout(
