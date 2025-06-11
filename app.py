@@ -1,3 +1,4 @@
+import plotly.express as px
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -66,6 +67,7 @@ for alloc in allocations.values():
 # === CALCULATE RETURNS ===
 returns = prices.pct_change().dropna()
 returns["cash"] = CASH_DAILY_YIELD
+returns["stablecoins"] = STABLECOIN_MONTHLY_YIELD
 
 # === Ensure all assets used in allocations exist in returns ===
 all_assets = set()
@@ -100,16 +102,32 @@ def backtest(prices, returns, regime_df, allocations):
     return pd.Series(portfolio_returns, index=returns.index)
 
 # === RUN BACKTEST ===
-st.subheader("🔁 Portfolio Backtest")
-portfolio_returns = backtest(prices, returns, regime_df, allocations)
-cumulative_returns = (1 + portfolio_returns.dropna()).cumprod()
+# === CURRENT REGIME & ALLOCATION PIE CHART ===
+st.subheader("🧭 Current Regime Allocation")
 
-fig, ax = plt.subplots(figsize=(10, 4))
-cumulative_returns.plot(ax=ax, lw=2)
-ax.set_title("Cumulative Portfolio Return")
-ax.set_ylabel("Portfolio Value (Indexed)")
-ax.grid(True)
-st.pyplot(fig)
+# Get the latest known regime
+latest_date = regime_df.index[-1]
+current_regime = regime_df.loc[latest_date, "regime"]
+
+if current_regime in allocations:
+    current_alloc = allocations[current_regime]
+
+    # Create interactive pie chart with Plotly
+    fig_pie = px.pie(
+        names=list(current_alloc.keys()),
+        values=list(current_alloc.values()),
+        title=f"Asset Allocation for Current Regime: {current_regime}",
+        hole=0.4
+    )
+    fig_pie.update_traces(textinfo='percent+label')
+
+    # Display in left column
+    left, _ = st.columns([2, 1])
+    with left:
+        st.plotly_chart(fig_pie, use_container_width=True)
+else:
+    st.warning(f"No allocation found for regime: {current_regime}")
+
 
 # === METRICS ===
 def compute_metrics(rets):
