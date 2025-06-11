@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import yfinance as yf
-import matplotlib.pyplot as plt
 
 # === SETTINGS ===
 START_DATE = "2010-01-01"
@@ -14,11 +13,9 @@ CASH_DAILY_YIELD = 0.045 / 12
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
-    "commodities": "GLD",  # ✅ use commodities, not gold
+    "commodities": "GLD",
     "cash": None
 }
-
-
 
 st.set_page_config(page_title="Regime Report", layout="wide")
 
@@ -38,29 +35,12 @@ def load_prices():
             df = yf.download(ticker, start=START_DATE, end=END_DATE, progress=False)
             df = df["Adj Close"] if "Adj Close" in df.columns else df["Close"]
             data[asset] = df
-   prices = pd.concat(data.values(), axis=1)
-column_names = [k if k != "gold" else "commodities" for k in data.keys() if data[k] is not None]
-prices.columns = column_names
-
-    return prices.dropna()
-
-@st.cache_data
-def load_prices():
-    data = {}
-    for asset, ticker in TICKERS.items():
-        if ticker:
-            df = yf.download(ticker, start=START_DATE, end=END_DATE, progress=False)
-            df = df["Adj Close"] if "Adj Close" in df.columns else df["Close"]
-            data[asset] = df
-
     prices = pd.concat(data.values(), axis=1)
-    column_names = [k if k != "gold" else "commodities" for k in data.keys() if data[k] is not None]
+    column_names = [k for k in data.keys() if data[k] is not None]
     prices.columns = column_names
-
     return prices.dropna()
 
-# st.write("✅ Columns in prices DataFrame:", prices.columns.tolist())
-
+prices = load_prices()
 
 regime_df.set_index("date", inplace=True)
 regime_df = regime_df.reindex(prices.index, method="ffill")
@@ -81,14 +61,13 @@ returns["stablecoins"] = STABLECOIN_MONTHLY_YIELD
 all_assets = set()
 for regime_weights in allocations.values():
     all_assets.update(regime_weights.keys())
-# st.write("🧩 All unique assets in optimal allocations:", all_assets)
 
 for asset in all_assets:
     if asset not in returns.columns:
         st.warning(f"Adding missing asset '{asset}' to returns with 0% yield.")
         returns[asset] = 0.0
 
-# === BACKTEST ===
+# === BACKTEST FUNCTION ===
 def backtest(prices, returns, regime_df, allocations):
     portfolio_returns = []
     current_weights = {asset: 0.25 for asset in TICKERS.keys()}
@@ -134,14 +113,13 @@ with left_col:
             hole=0.0,
             title="ALLOCATION %",
             color=list(current_alloc.keys()),
-          color_discrete_map={
-    "stocks": "#00bf63",
-    "stablecoins": "#ff5757",
-    "cash": "#ff3131",
-    "crypto": "#25a159",
-    "commodities": "#f4b70f",  # ✅ now matched to GLD
-}
-
+            color_discrete_map={
+                "stocks": "#00bf63",
+                "stablecoins": "#ff5757",
+                "cash": "#ff3131",
+                "crypto": "#25a159",
+                "commodities": "#f4b70f",
+            }
         )
         fig_pie.update_traces(
             textinfo='percent',
@@ -157,50 +135,10 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-#     st.subheader("\U0001F4C8 Portfolio Performance")
-#     def compute_metrics(rets):
-#         mean_daily = rets.mean()
-#         std_daily = rets.std()
-#         cagr = (1 + mean_daily) ** 252 - 1
-#         volatility = std_daily * np.sqrt(252)
-#         sharpe = (mean_daily / std_daily) * np.sqrt(252)
-#         drawdown = (1 + rets).cumprod().div((1 + rets).cumprod().cummax()) - 1
-#         max_dd = drawdown.min()
-#         return {
-#             "CAGR": cagr,
-#             "Volatility": volatility,
-#             "Sharpe Ratio": sharpe,
-#             "Max Drawdown": max_dd
-#         }
-#     metrics = compute_metrics(portfolio_returns.dropna())
-#     st.write(
-#         pd.DataFrame(metrics, index=["Value"]).T.style.format({
-#             "CAGR": "{:.2%}",
-#             "Volatility": "{:.2%}",
-#             "Max Drawdown": "{:.2%}",
-#             "Sharpe Ratio": "{:.2f}"
-#         })
-#     )
-
-#     sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
-# sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
-# sp500 = sp500_series.pct_change().dropna()
-# sp500_cum = (1 + sp500).cumprod()
-# portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
-
-# try:
-#     outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
-#     outperformance_value = outperformance.item() if hasattr(outperformance, "item") else outperformance
-
-#     st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance_value:.2%}")
-# except Exception as e:
-#     st.warning(f"Not enough data to calculate S&P 500 outperformance.\nError: {e}")
     st.subheader("📦 Portfolio Holdings")
     if current_alloc:
         for asset, weight in current_alloc.items():
             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
-
-
 
 with right_col:
     st.subheader("\U0001F9E0 Interpretation of Data")
@@ -209,6 +147,7 @@ with right_col:
     st.subheader("\U0001F52D Personal Outlook")
     outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=150)
 
-    st.subheader("\u2705 Conclusion")
+    st.subheader("✅ Conclusion")
     conclusion = st.text_area("Summarize your view and suggested action", height=100)
+
 
