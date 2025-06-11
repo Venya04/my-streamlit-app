@@ -113,20 +113,53 @@ if current_regime in allocations:
     current_alloc = allocations[current_regime]
 
     # Create interactive pie chart with Plotly
+    # === CUSTOMIZED PIE CHART FOR CURRENT ALLOCATION ===
+st.subheader("📊 Allocation %")
+
+latest_date = regime_df.index[-1]
+current_regime = regime_df.loc[latest_date, "regime"]
+
+if current_regime in allocations:
+    current_alloc = allocations[current_regime]
+
+    # Set custom colors (adjust as needed)
+    custom_colors = {
+        "stocks": "#1f77b4",       # blue
+        "stablecoins": "#2ca02c",  # green
+        "cash": "#ff7f0e",         # orange
+        "crypto": "#d62728",       # red
+        "commodities": "#9467bd",  # purple
+    }
+
     fig_pie = px.pie(
         names=list(current_alloc.keys()),
         values=list(current_alloc.values()),
-        title=f"Asset Allocation for Current Regime: {current_regime}",
-        hole=0.4
+        hole=0.0,
+        title="ALLOCATION %",
+        color=list(current_alloc.keys()),
+        color_discrete_map=custom_colors
     )
-    fig_pie.update_traces(textinfo='percent+label')
 
-    # Display in left column
+    fig_pie.update_traces(
+        textinfo='percent',
+        textfont_size=16,
+        pull=[0.03] * len(current_alloc)  # slightly "explode" all slices
+    )
+
+    fig_pie.update_layout(
+        title_font_size=24,
+        showlegend=True,
+        legend=dict(orientation="h", y=-0.2),
+        paper_bgcolor='rgba(0,0,0,0)',  # transparent background
+        plot_bgcolor='rgba(0,0,0,0)',
+    )
+
     left, _ = st.columns([2, 1])
     with left:
         st.plotly_chart(fig_pie, use_container_width=True)
 else:
     st.warning(f"No allocation found for regime: {current_regime}")
+
 
 
 # === METRICS ===
