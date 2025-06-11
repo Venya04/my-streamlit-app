@@ -149,10 +149,10 @@ with left_col:
 
 with right_col:
     st.subheader("Interpretation of Data")
-    interp = st.text_area("What are we seeing in the macro environment?", height=130)
+    interp = st.text_area("What are we seeing in the macro environment?", height=200)
 
     st.subheader("Personal Outlook")
-    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=130)
+    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=200)
 
 # === PORTFOLIO HOLDINGS ===
 # st.markdown("---")
@@ -166,7 +166,7 @@ with right_col:
 # === CONCLUSION ===
 st.markdown("---")
 st.subheader("Conclusion")
-conclusion = st.text_area("Summarize your view and suggested action", height=100)
+conclusion = st.text_area("Summarize your view and suggested action", height=400)
 
 
 
