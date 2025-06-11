@@ -119,7 +119,7 @@ if current_alloc:
         title_font_size=22,
         showlegend=True,
         legend=dict(orientation="h", y=-0.2),
-        height=450,
+        height=700,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
@@ -136,11 +136,11 @@ if current_alloc:
 st.markdown("---")
 
 st.subheader("🧠 Interpretation of Data")
-st.text_area("What are we seeing in the macro environment?", height=150)
+st.text_area("What are we seeing in the macro environment?", height=400)
 
 st.subheader("⚒️ Personal Outlook")
-st.text_area("Your thoughts on the market (e.g., technical signals)", height=150)
+st.text_area("Your thoughts on the market (e.g., technical signals)", height=400)
 
 st.subheader("✅ Conclusion")
-st.text_area("Summarize your view and suggested action", height=100)
+st.text_area("Summarize your view and suggested action", height=400)
 
