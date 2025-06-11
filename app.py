@@ -104,41 +104,47 @@ st.markdown("---")
 
 # === MAIN BODY ===
 # Split left side into pie chart and holdings side-by-side
-pie_col, holdings_col = left_col.columns([2, 1])  # 2:1 ratio for wider pie
+# === MAIN BODY LAYOUT ===
+left_col, right_col = st.columns([3, 2])  # Wider left for pie/holdings
 
-with pie_col:
-    if current_alloc:
-        fig_pie = px.pie(
-            names=list(current_alloc.keys()),
-            values=list(current_alloc.values()),
-            hole=0.0,
-            color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#00bf63",
-                "stablecoins": "#ff5757",
-                "cash": "#ff3131",
-                "crypto": "#25a159",
-                "commodities": "#f4b70f",
-            }
-        )
-        fig_pie.update_traces(
-            textinfo='percent',
-            textfont_size=16,
-            pull=[0.03] * len(current_alloc),
-            marker=dict(line=dict(color="#000000", width=2))  # outline for old-style contrast
-        )
-        fig_pie.update_layout(
-            showlegend=False,
-            margin=dict(t=10, b=10, l=10, r=10),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
+# Inside left_col, split into pie and holdings
+with left_col:
+    pie_col, holdings_col = st.columns([2, 1])  # Pie and holdings side-by-side
 
-with holdings_col:
-    st.markdown("### Portfolio Holdings")
-    for asset, weight in current_alloc.items():
-        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+    with pie_col:
+        if current_alloc:
+            fig_pie = px.pie(
+                names=list(current_alloc.keys()),
+                values=list(current_alloc.values()),
+                hole=0.0,
+                color=list(current_alloc.keys()),
+                color_discrete_map={
+                    "stocks": "#00bf63",
+                    "stablecoins": "#ff5757",
+                    "cash": "#ff3131",
+                    "crypto": "#25a159",
+                    "commodities": "#f4b70f",
+                }
+            )
+            fig_pie.update_traces(
+                textinfo='percent',
+                textfont_size=16,
+                pull=[0.03] * len(current_alloc),
+                marker=dict(line=dict(color="#000000", width=2))
+            )
+            fig_pie.update_layout(
+                showlegend=False,
+                margin=dict(t=10, b=10, l=10, r=10),
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+            )
+            st.plotly_chart(fig_pie, use_container_width=True)
+
+    with holdings_col:
+        st.markdown("### Portfolio Holdings")
+        for asset, weight in current_alloc.items():
+            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
 
 
 with right_col:
