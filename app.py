@@ -18,7 +18,7 @@ TICKERS = {
     "cash": None
 }
 
-st.set_page_config(page_title="Regime-Based Asset Allocation", layout="wide")
+st.set_page_config(page_title="Regime Report", layout="wide")
 st.title("📈 Regime-Based Investment Strategy Dashboard")
 
 # === LOAD PRICE DATA ===
