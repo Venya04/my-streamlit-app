@@ -137,14 +137,13 @@ with left_col:
             pull=[0.04] * len(current_alloc)
         )
         fig_pie.update_layout(
-            width=500,
-            height=500,
+            width=1000,
+            height=1000,
             showlegend=True,
             legend=dict(orientation="h", y=-0.2),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            height=1000,  # Increase this
-            width=1000,
+        
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
