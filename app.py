@@ -161,16 +161,19 @@ with left_col:
     )
 
     sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
-    sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
-    sp500 = sp500_series.pct_change().dropna()
-    sp500_cum = (1 + sp500).cumprod()
-    portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
-    outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
+sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
+sp500 = sp500_series.pct_change().dropna()
+sp500_cum = (1 + sp500).cumprod()
+portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
 
-    if pd.notna(outperformance):
-        st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance:.2%}")
-    else:
-        st.warning("Not enough data to calculate S&P 500 outperformance.")
+try:
+    outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
+    outperformance_value = outperformance.item() if hasattr(outperformance, "item") else outperformance
+
+    st.metric(label="\U0001F4CA Outperformance vs S&P 500", value=f"{outperformance_value:.2%}")
+except Exception as e:
+    st.warning(f"Not enough data to calculate S&P 500 outperformance.\nError: {e}")
+
 
 with right_col:
     st.subheader("\U0001F9E0 Interpretation of Data")
