@@ -161,11 +161,11 @@ with right_col:
     interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
     st.subheader("Personal Outlook")
-    outlook = st.text_area("Your thoughts on the market (e.g., technical signals)", height=130)
+    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
 
 st.markdown("---")
 st.subheader("Conclusion")
-conclusion = st.text_area("Summarize your view and suggested action", height=100)
+conclusion = st.text_area("Summary and suggested action", height=100)
 
 
 
