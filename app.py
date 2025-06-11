@@ -18,7 +18,11 @@ TICKERS = {
     "cash": None
 }
 
-st.set_page_config(page_title="Regime Report", layout="wide")
+st.set_page_config(
+    page_title="Regime Report",
+    layout="centered"  # or "wide" if already optimized
+)
+
 
 # === CUSTOM STYLES ===
 st.markdown("""
@@ -111,7 +115,7 @@ st.markdown("""
 
 st.markdown("---")
 
-left_col, right_col = st.columns([2, 1])
+left_col, right_col = st.columns([3, 2])
 
 with left_col:
     st.subheader("Allocation for Current Regime")
