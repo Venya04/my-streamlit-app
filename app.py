@@ -124,11 +124,11 @@ if current_regime in allocations:
 
     # Set custom colors (adjust as needed)
     custom_colors = {
-        "stocks": "#1f77b4",       # blue
-        "stablecoins": "#2ca02c",  # green
-        "cash": "#ff7f0e",         # orange
-        "crypto": "#d62728",       # red
-        "commodities": "#9467bd",  # purple
+        "stocks": "#00bf63",       # green
+        "stablecoins": "#ff5757",  # light red
+        "cash": "#ff3131",         # red
+        "crypto": "#25a159",       # light green
+        "commodities": "#f4b70f",  # yellow
     }
 
     fig_pie = px.pie(
