@@ -43,6 +43,8 @@ def load_prices():
     return prices.dropna()
 
 prices = load_prices()
+st.write("✅ Columns in prices DataFrame:", prices.columns.tolist())
+
 
 regime_df.set_index("date", inplace=True)
 regime_df = regime_df.reindex(prices.index, method="ffill")
@@ -63,6 +65,7 @@ returns["stablecoins"] = STABLECOIN_MONTHLY_YIELD
 all_assets = set()
 for regime_weights in allocations.values():
     all_assets.update(regime_weights.keys())
+st.write("🧩 All unique assets in optimal allocations:", all_assets)
 
 for asset in all_assets:
     if asset not in returns.columns:
