@@ -153,9 +153,15 @@ with left_col:
     metrics = compute_metrics(portfolio_returns.dropna())
     st.write(pd.DataFrame(metrics, index=["Value"]).T.style.format("{:.2%}"))
 
- sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
-sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
-sp500 = sp500_series.pct_change().dropna()
+    # OUTPERFORMANCE
+    sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
+    sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
+    sp500 = sp500_series.pct_change().dropna()
+    sp500_cum = (1 + sp500).cumprod()
+    portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
+    outperformance = (portfolio_cum.iloc[-1] / sp500_cum.iloc[-1]) - 1
+    st.metric(label="📊 Outperformance vs S&P 500", value=f"{outperformance:.2%}")
+
 
     sp500_cum = (1 + sp500).cumprod()
     portfolio_cum = (1 + portfolio_returns.dropna()).cumprod()
