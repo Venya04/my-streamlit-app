@@ -141,8 +141,8 @@ with left_col:
             pull=[0.04] * len(current_alloc)
         )
         fig_pie.update_layout(
-            width=700,
-            height=700,
+            width=500,
+            height=500,
             showlegend=False,
             # legend=dict(orientation="h", y=-0.2),
             # paper_bgcolor='rgba(0,0,0,0)',
