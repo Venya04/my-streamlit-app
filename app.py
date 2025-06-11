@@ -163,6 +163,7 @@ st.write(
     })
 )
 
+
 # === Outperformance ===
 sp500_raw = yf.download("SPY", start=START_DATE, end=END_DATE, progress=False)
 sp500_series = sp500_raw["Adj Close"] if "Adj Close" in sp500_raw else sp500_raw["Close"]
