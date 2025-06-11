@@ -18,7 +18,7 @@ TICKERS = {
     "cash": None
 }
 
-st.set_page_config(page_title="Regime-Based Investment Dashboard", layout="wide")
+st.set_page_config(page_title="Regime-Based Asset Allocation", layout="wide")
 st.title("📈 Regime-Based Investment Strategy Dashboard")
 
 # === LOAD PRICE DATA ===
@@ -27,7 +27,7 @@ st.sidebar.header("Data Settings")
 def load_csv_from_repo(path):
     return pd.read_csv(path, parse_dates=["date"] if "regime" in path else None)
 
-regime_df = load_csv_from_repo("regime_labels.csv")
+regime_df = load_csv_from_repo("regime_labels_expanded.csv")
 opt_alloc_df = load_csv_from_repo("optimal_allocations.csv")
 
 
