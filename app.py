@@ -145,6 +145,4 @@ def compute_metrics(rets):
         "Max Drawdown": max_dd
     }
 
-metrics = compute_metrics(portfolio_returns.dropna())
-st.subheader("📊 Performance Metrics")
-st.write(pd.DataFrame(metrics, index=["Value"]).T.style.format("{:.2%}"))
+
