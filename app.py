@@ -128,8 +128,8 @@ with left_col:
         )
         fig_pie.update_layout(
             title_font_size=28,
-            height=500,  # make chart taller
-            width=500,   # make chart wider
+            height=700,  # make chart taller
+            width=700,   # make chart wider
             showlegend=True,
             legend=dict(orientation="h", y=-0.2),
             paper_bgcolor='rgba(0,0,0,0)',
