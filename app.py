@@ -139,7 +139,7 @@ with left_col:
         fig_pie.update_layout(
             width=700,
             height=700,
-            showlegend=True,
+            # showlegend=True,
             # legend=dict(orientation="h", y=-0.2),
             # paper_bgcolor='rgba(0,0,0,0)',
             # plot_bgcolor='rgba(0,0,0,0)',
