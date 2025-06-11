@@ -46,15 +46,15 @@ def load_prices():
 prices = load_prices()
 
 # === LOAD INPUT FILES ===
-if regime_file is not None:
-    regime_df = pd.read_csv(regime_file, parse_dates=["date"])
-else:
-    st.stop()
+# if regime_file is not None:
+#     regime_df = pd.read_csv(regime_file, parse_dates=["date"])
+# else:
+#     st.stop()
 
-if alloc_file is not None:
-    opt_alloc_df = pd.read_csv(alloc_file)
-else:
-    st.stop()
+# if alloc_file is not None:
+#     opt_alloc_df = pd.read_csv(alloc_file)
+# else:
+#     st.stop()
 
 regime_df.set_index("date", inplace=True)
 regime_df = regime_df.reindex(prices.index, method="ffill")
