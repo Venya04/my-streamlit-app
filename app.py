@@ -339,24 +339,31 @@ regime_df = load_csv_from_repo("regime_labels_expanded.csv")
 opt_alloc_df = load_csv_from_repo("optimal_allocations.csv")
 
 @st.cache_data
-@st.cache_data
 def load_prices():
     data = {}
     for asset, ticker in TICKERS.items():
         if ticker:
             df = yf.download(ticker, start=START_DATE, end=END_DATE, progress=False)
+
+            # Extract price series
             if "Adj Close" in df.columns:
-                df = df["Adj Close"]
+                series = df["Adj Close"]
             elif "Close" in df.columns:
-                df = df["Close"]
+                series = df["Close"]
             else:
-                continue
-            df = df.to_frame(name=asset)  # <-- Fix: convert to DataFrame with asset name
-            data[asset] = df
+                continue  # Skip if no usable price column
+
+            # Ensure it's a DataFrame with the correct column name
+            df_clean = pd.DataFrame(series)
+            df_clean.columns = [asset]
+
+            data[asset] = df_clean
+
     if not data:
         return pd.DataFrame()
-    return pd.concat(data.values(), axis=1).dropna()
 
+    prices = pd.concat(data.values(), axis=1)
+    return prices.dropna()
 
 prices = load_prices()
 
