@@ -331,18 +331,25 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    # Horizontal bullet layout using custom HTML and inline CSS
-# PORTFOLIO HOLDINGS just below the pie chart, aligned to the right
- st.markdown("### Portfolio Holdings")
-    bullets = " ".join([
-        f"<span style='margin-right: 20px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</span>"
-        for asset, weight in current_alloc.items()
-    ])
-    st.markdown(
-        f"<div style='display: flex; flex-wrap: wrap; margin-top: -10px; margin-bottom: 30px;'>{bullets}</div>",
-        unsafe_allow_html=True
-    )
-
+st.markdown("### Portfolio Holdings")
+bullets = " ".join([
+    f"<span style='margin: 0 12px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</span>"
+    for asset, weight in current_alloc.items()
+])
+st.markdown(
+    f"""
+    <div style='
+        display: flex;
+        justify-content: left;
+        align-items: left;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    '>
+        {bullets}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # RIGHT — Text Boxes (3 stacked)
 with right_col:
     st.subheader("Market Insight")
