@@ -129,7 +129,17 @@ left_col, right_col = st.columns([2, 2])
 # LEFT — Pie Chart and Portfolio Holdings below
 # === Pie chart and aligned holdings ===
 with st.container():
-    chart_col, info_col = st.columns([2, 2])
+    chart_col, info_col = st.columns([5, 4])  # narrower right side to balance whitespace
+
+with chart_col:
+    # pie chart...
+    st.plotly_chart(fig_pie, use_container_width=True)
+
+    # Portfolio holdings in single column
+    st.markdown("### Portfolio Holdings")
+    for asset, weight in current_alloc.items():
+        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
 
     with chart_col:
         # Pie chart
