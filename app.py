@@ -169,13 +169,21 @@ with left_col:
             values=list(current_alloc.values()),
             hole=0.0,
             color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#00bf63",
-                "stablecoins": "#ff5757",
-                "cash": "#ff3131",
-                "crypto": "#25a159",
-                "commodities": "#f4b70f",
-            }
+            # color_discrete_map={
+            #     "stocks": "#00bf63",
+            #     "stablecoins": "#ff5757",
+            #     "cash": "#ff3131",
+            #     "crypto": "#25a159",
+            #     "commodities": "#f4b70f",
+            # }
+
+color_discrete_map={
+    "stocks": "#4b5320",        # Dark Olive
+    "stablecoins": "#7c6c57",   # Faded Taupe
+    "cash": "#b1a296",          # Vintage Beige
+    "crypto": "#5e5a59",        # Charcoal Gray
+    "commodities": "#aa8c5f",   # Bronze Gold
+}
         )
         fig_pie.update_traces(
             textinfo='percent',
