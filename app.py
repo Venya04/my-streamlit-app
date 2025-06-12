@@ -182,7 +182,7 @@ with st.container():
                 text-align: left;
                 width: 435px;
             '>
-                <ul style='padding-left: 30px; list-style-type: disc;'>
+                <ul style='padding-left: 20px; list-style-type: disc;'>
         """ + "".join([
             f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
             for asset, weight in current_alloc.items()
