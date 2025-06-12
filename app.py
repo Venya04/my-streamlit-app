@@ -305,25 +305,26 @@ color_discrete_map = {
 #         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
 with right_col:
+    # Inject CSS for custom card styling
     st.markdown("""
     <style>
-        .section-title {
-            font-family: 'Merriweather', serif;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            color: white;
-            border-bottom: 1px solid #555;
-            padding-bottom: 4px;
-        }
         .section-box {
             border: 1px solid #444;
             padding: 16px;
             border-radius: 6px;
-            background-color: rgba(255,255,255,0.08);
+            background-color: rgba(255,255,255,0.05);
             margin-bottom: 25px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: white;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -335,12 +336,7 @@ with right_col:
     ]
 
     for title, placeholder in sections:
-        cols = st.columns([0.95, 0.05])  # Slightly wider for better visual alignment
-        with cols[0]:
-            st.markdown(f"""
-                <div class='section-box'>
-                    <div class='section-title'>{title}</div>
-            """, unsafe_allow_html=True)
-            st.text_area(label=placeholder, height=130, label_visibility="collapsed")
-            st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='section-box'><div class='section-title'>{title}</div>", unsafe_allow_html=True)
+        st.text_area(label=placeholder, label_visibility="collapsed", height=130)
+        st.markdown("</div>", unsafe_allow_html=True)
 
