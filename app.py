@@ -247,7 +247,7 @@ with right_col:
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-bottom: 10px;
-                text-align: center;
+                text-align: left;
                 color: white;
                 border-bottom: 1px solid #555;
                 padding-bottom: 4px;
