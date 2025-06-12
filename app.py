@@ -224,7 +224,7 @@ with left_col:
 
 
 
-with info_col:
+with right_col:
     cols = st.columns([0.4, 0.1])  # 90% width for the box, 10% empty for spacing
     with cols[0]:
         st.subheader("Market Insight")
