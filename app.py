@@ -399,52 +399,31 @@ current_alloc = allocations.get(current_regime, {})
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
-    .gothic-title {
-        font-family: 'UnifrakturCook', serif;
-        text-align: center;
-        font-size: clamp(2rem, 5vw, 4rem);
-        font-weight: bold;
-        padding: 0.5rem 0;
-        letter-spacing: 1px;
-    }
-    .pub-info {
-        text-align: center;
-        font-family: 'Georgia', serif;
-        font-size: 0.8rem;
-        margin-top: -18px;
-        color: #ccc;
-    }
-    @media (max-width: 768px) {
-        .block-container {
-            padding: 1rem !important;
+        .gothic-title {
+            font-family: 'UnifrakturCook', serif;
+            text-align: center;
+            font-size: 60px;
+            font-weight: bold;
+            padding: 0.5rem 0;
+            letter-spacing: 1px;
         }
-    }
-    </style>
-    <div class='gothic-title'>The Regime Report</div>
-    <div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
-    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
-        Asset Allocation in Current Market Conditions
-    </h3>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
-        .block-container {
-            padding-left: 5%;
-            padding-right: 5%;
+        .pub-info {
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 13px;
+            margin-top: -18px;
+            color: #ccc;
         }
         .section-title {
             font-family: Georgia, serif;
             font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
-            margin-bottom: 6px;
-            color: #d4af37;
+            margin-bottom: 10px;
+            text-align: left;
+            color: white;
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
@@ -452,6 +431,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 # === MAIN LAYOUT ===
 left_col, right_col = st.columns([1.3, 1])
