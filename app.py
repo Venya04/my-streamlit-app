@@ -280,8 +280,16 @@ st.markdown(
         padding: 0.5rem 0;
         letter-spacing: 1px;
     }
+    .pub-info {
+        text-align: center;
+        font-family: Georgia, serif;
+        font-size: 13px;
+        margin-top: -18px;
+        color: #ccc;
+    }
     </style>
     <div class='gothic-title'>The Regime Report</div>
+    <div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
     <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
         Asset Allocation in Current Market Conditions
     </h3>
