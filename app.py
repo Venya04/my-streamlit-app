@@ -476,7 +476,7 @@ with left_col:
         </style>
     """, unsafe_allow_html=True)
 
-if current_alloc:
+    if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
             values=list(current_alloc.values()),
@@ -509,7 +509,7 @@ if current_alloc:
         """
         <div style='text-align: center; margin-top: -5px;'>
             <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
-        """ + """".join([
+        """ + "".join([
             f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
             for asset, weight in current_alloc.items()
         ]) + """
@@ -518,6 +518,7 @@ if current_alloc:
         """,
         unsafe_allow_html=True
     )
+
 
 
 with right_col:
