@@ -124,7 +124,7 @@ st.markdown(
 st.markdown("---")
 
 # === LAYOUT ===
-left_col, right_col = st.columns([2, 2])
+left_col, right_col = st.columns([1.2, 1])
 
 # LEFT — Pie Chart and Portfolio Holdings below
 # === Pie chart and aligned holdings ===
