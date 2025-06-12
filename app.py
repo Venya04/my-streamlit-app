@@ -548,9 +548,3 @@ with right_col:
             st.markdown("<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130, label_visibility="collapsed")
 
-# === FOOTER ===
-st.markdown(f"""
-    <div style='text-align: center; font-size: 12px; color: #777; padding-top: 2rem; font-family: Georgia, serif;'>
-        © Regime Report · BiWeekly Edition · Compiled {pd.to_datetime("today").strftime("%B %d, %Y")}
-    </div>
-""", unsafe_allow_html=True)
