@@ -424,7 +424,7 @@ with left_col:
     )
 
 with right_col:
-    right_box_style = """
+    st.markdown("""
     <style>
         .section-title {
             font-family: Georgia, serif;
@@ -432,7 +432,7 @@ with right_col:
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 6px;
-            color: #f1e592; /* updated to light gold */
+            color: #f1e592; /* light gold */
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
@@ -440,24 +440,15 @@ with right_col:
             color: #f1e592 !important;
         }
     </style>
-    """
-    st.markdown(right_box_style, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
-        interp = st.text_area("What are we seeing in the macro environment?", height=130)
-
-    st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Top Strategy Note</div>", unsafe_allow_html=True)
-        outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
-
-    st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
-        conclusion = st.text_area("Summary and suggested action", height=130)
+    for title, placeholder in [
+        ("Market Insight", "What are we seeing in the macro environment?"),
+        ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
+        ("Trader's Conclusion", "Summary and suggested action")
+    ]:
+        cols = st.columns([0.6, 0.1])
+        with cols[0]:
+            st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
+            st.text_area(placeholder, height=130)
+        st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
