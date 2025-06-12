@@ -463,3 +463,4 @@ with right_col:
         st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
         conclusion = st.text_area("Summary and suggested action", height=130)
 
+
