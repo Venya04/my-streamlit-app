@@ -542,7 +542,7 @@ with right_col:
                 text-transform: uppercase;
                 margin-bottom: 10px;
                 text-align: left;
-                color: white; /* override gold */
+                color: white; /* white for right section */
                 border-bottom: 1px solid #555;
                 padding-bottom: 4px;
             }
@@ -554,14 +554,19 @@ with right_col:
         </style>
     """, unsafe_allow_html=True)
 
-
+    # Section structure: title = shown in styled header, placeholder = shown in textarea as italic prompt
     for title, placeholder in [
-        ("Market Insight", "What are we seeing in the macro environment?"),
-        ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
-        ("Trader's Conclusion", "Summary and suggested action")
+        ("Market Insight", "*What are we seeing in the macro environment?*"),
+        ("Top Strategy Note", "*Thoughts on the market (e.g., technical signals)*"),
+        ("Trader's Conclusion", "*Summary and suggested action*")
     ]:
         cols = st.columns([0.9, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.text_area(placeholder, height=130, label_visibility="collapsed")
+            st.text_area(
+                label="",
+                placeholder=placeholder,
+                height=130,
+                label_visibility="collapsed"
+            )
         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
