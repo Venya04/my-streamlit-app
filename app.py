@@ -209,24 +209,23 @@ with right_col:
     """
     st.markdown(box_style, unsafe_allow_html=True)
 
-
-with right_col:
     cols = st.columns([0.6, 0.1])
     with cols[0]:
-        st.subheader("Market Insight")
+        st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
         interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
     st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
-        st.subheader("Top Strategy Note")
+        st.markdown("<div class='section-title'>Top Strategy Note</div>", unsafe_allow_html=True)
         outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
 
     st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
-        st.subheader("Trader's Conclusion")
+        st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
         conclusion = st.text_area("Summary and suggested action", height=130)
+
 
