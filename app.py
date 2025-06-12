@@ -486,17 +486,17 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
-    st.markdown("""
-        <div style='text-align: center; margin-top: -5px;'>
-            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
-    """ + """".join([
-        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-        for asset, weight in current_alloc.items()
-    ]) + """
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
+    html = """
+    <div style='text-align: center; margin-top: -5px;'>
+        <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
+"""
+for asset, weight in current_alloc.items():
+    html += f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+html += """
+        </ul>
+    </div>
+"""
+st.markdown(html, unsafe_allow_html=True)
 
 with right_col:
     for title, placeholder in [
