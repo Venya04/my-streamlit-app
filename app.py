@@ -184,18 +184,30 @@ with left_col:
 
 
 with right_col:
-    cols = st.columns([0.6, 0.1])  # 90% width for the box, 10% empty for spacing
-    with cols[0]:
-        st.subheader("Market Insight")
-        interp = st.text_area("What are we seeing in the macro environment?", height=130)
+    box_style = """
+        <style>
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+        </style>
+    """
+    st.markdown(box_style, unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
-        st.subheader("Strategy Note")
-        outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+        st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
+        interp = st.text_area("What are we seeing in the macro environment?", height=130, label_visibility="collapsed")
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
-        st.subheader("Trader's Conclusion")
-        conclusion = st.text_area("Summary and suggested action", height=130)
+        st.markdown("<div class='section-title'>Top Strategy Note</div>", unsafe_allow_html=True)
+        outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130, label_visibility="collapsed")
 
+    cols = st.columns([0.6, 0.1])
+    with cols[0]:
+        st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
+        conclusion = st.text_area("Summary and suggested action", height=130, label_visibility="collapsed")
