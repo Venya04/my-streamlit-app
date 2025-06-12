@@ -138,7 +138,22 @@ st.markdown(
 # Side-by-side layout
 left_col, right_col = st.columns([1.3, 1])
 
+
 with left_col:
+    left_box_style = """
+        <style>
+            .left-section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        </style>
+    """
+
+ st.markdown(left_box_style, unsafe_allow_html=True)
     # === PIE CHART ===
     if current_alloc:
         fig_pie = px.pie(
