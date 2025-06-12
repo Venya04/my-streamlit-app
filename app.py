@@ -129,7 +129,7 @@ left_col, right_col = st.columns([3, 2])
 # LEFT — Pie Chart and Portfolio Holdings below
 # === Pie chart and aligned holdings ===
 with st.container():
-    chart_col, info_col = st.columns([3, 2])
+    chart_col, info_col = st.columns([6, 2])
 
     with chart_col:
         # Pie chart
