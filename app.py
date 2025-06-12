@@ -311,14 +311,14 @@ import yfinance as yf
 START_DATE = "2010-01-01"
 END_DATE = "2024-12-31"
 STABLECOIN_MONTHLY_YIELD = 0.05 / 12
-CASH_DAILY_YIELD = 0.045 / 252  # Trading days in year
+CASH_DAILY_YIELD = 0.045 / 252
 
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
     "commodities": "GLD",
     "cash": None,
-    "stablecoins": None  # Add explicitly
+    "stablecoins": None
 }
 
 st.set_page_config(page_title="Regime Report", layout="wide")
@@ -351,24 +351,22 @@ def load_prices():
             else:
                 continue
             data[asset] = df.rename(asset)
-    prices = pd.concat(data.values(), axis=1)
-    return prices.dropna()
+    return pd.concat(data.values(), axis=1).dropna()
 
 prices = load_prices()
 
 # === VALIDATE DATA ===
 if prices.empty:
-    st.error("Price data failed to load. Please check your internet connection or ticker symbols.")
+    st.error("Price data failed to load.")
     st.stop()
 
 if regime_df.empty or "regime" not in regime_df.columns:
-    st.error("Regime labels are missing or incorrectly formatted.")
+    st.error("Regime data missing or malformed.")
     st.stop()
 
-# === PREPARE REGIME + ALLOCATIONS ===
+# === PREPARE DATA ===
 regime_df.set_index("date", inplace=True)
-regime_df = regime_df.asfreq("D").ffill()
-regime_df = regime_df.reindex(prices.index, method="ffill")
+regime_df = regime_df.asfreq("D").ffill().reindex(prices.index, method="ffill")
 regime_df["regime"] = regime_df["regime"].str.capitalize()
 
 allocations = opt_alloc_df.set_index("regime").to_dict(orient="index")
@@ -377,44 +375,41 @@ for alloc in allocations.values():
         alloc["cash"] = 0.1
     total = sum(alloc.values())
     for k in alloc:
-        alloc[k] = alloc[k] / total
+        alloc[k] /= total
 
 # === RETURNS ===
 returns = prices.pct_change().dropna()
 returns["cash"] = CASH_DAILY_YIELD
-daily_stablecoin_yield = (1 + STABLECOIN_MONTHLY_YIELD) ** (1 / 22) - 1
-returns["stablecoins"] = daily_stablecoin_yield
+returns["stablecoins"] = (1 + STABLECOIN_MONTHLY_YIELD)**(1/22) - 1
 
-# Fill missing asset returns with zeros
 all_assets = set()
-for regime_weights in allocations.values():
-    all_assets.update(regime_weights.keys())
+for alloc in allocations.values():
+    all_assets.update(alloc.keys())
 
 for asset in all_assets:
     if asset not in returns.columns:
         returns[asset] = 0.0
 
-# === BACKTEST FUNCTION ===
-def backtest(prices, returns, regime_df, allocations):
+# === BACKTEST ===
+def backtest(returns, regime_df, allocations):
     portfolio_returns = []
-    current_weights = {asset: 0.25 for asset in TICKERS.keys()}
+    current_weights = {asset: 0.25 for asset in TICKERS}
     prev_regime = None
     for date in returns.index:
         regime = regime_df.loc[date, "regime"]
         if pd.isna(regime):
             portfolio_returns.append(np.nan)
             continue
-        if regime != prev_regime:
-            if regime in allocations:
-                current_weights = allocations[regime]
-                prev_regime = regime
-        daily_ret = sum(returns.loc[date, asset] * current_weights.get(asset, 0.0) for asset in current_weights)
-        portfolio_returns.append(daily_ret)
+        if regime != prev_regime and regime in allocations:
+            current_weights = allocations[regime]
+            prev_regime = regime
+        ret = sum(returns.loc[date, asset] * current_weights.get(asset, 0) for asset in current_weights)
+        portfolio_returns.append(ret)
     return pd.Series(portfolio_returns, index=returns.index)
 
-portfolio_returns = backtest(prices, returns, regime_df, allocations)
+portfolio_returns = backtest(returns, regime_df, allocations)
 
-# === REGIME & ALLOCATION ===
+# === GET CURRENT REGIME ===
 latest_date = regime_df.index[-1]
 current_regime = regime_df.loc[latest_date, "regime"]
 current_alloc = allocations.get(current_regime, {})
@@ -486,7 +481,7 @@ with left_col:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
             values=list(current_alloc.values()),
-            hole=0.0,
+            hole=0,
             color=list(current_alloc.keys()),
             color_discrete_map={
                 "stocks": "#102030",
@@ -515,7 +510,7 @@ with left_col:
         """
         <div style='text-align: center; margin-top: -5px;'>
             <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
-        """ + """".join([
+        """ + "".join([
             f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
             for asset, weight in current_alloc.items()
         ]) + """
