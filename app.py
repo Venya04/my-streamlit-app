@@ -108,7 +108,7 @@ st.markdown(
     }
     .pub-info {
         text-align: center;
-        font-family: 'Merriweather', serif;
+        font-family: 'Georgia', serif;
         font-size: 13px;
         margin-top: -18px;
         color: #ccc;
