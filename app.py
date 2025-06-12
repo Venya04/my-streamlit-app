@@ -348,9 +348,6 @@ st.markdown(
         margin-top: -18px;
         color: #ccc;
     }
-    body, .stText, .stMarkdown, .stTextInput textarea {
-        color: #f1e592 !important;
-    }
     .block-container {
         padding-left: 10rem;
         padding-right: 10rem;
@@ -361,7 +358,7 @@ st.markdown(
         font-weight: bold;
         text-transform: uppercase;
         margin-bottom: 6px;
-        color: #f1e592;
+        color: white;
         border-bottom: 1px solid #555;
         padding-bottom: 4px;
     }
@@ -408,19 +405,19 @@ with left_col:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     st.markdown("<div class='section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
-
-    list_items = "".join([
-        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-        for asset, weight in current_alloc.items()
-    ])
-
-    st.markdown(f"""
+    st.markdown(
+        """
         <div style='text-align: center; margin-top: -5px;'>
-            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block; color: #f1e592;'>
-                {list_items}
+            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block; color: white;'>
+        """ + """".join([
+            f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+            for asset, weight in current_alloc.items()
+        ]) + """
             </ul>
         </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
 with right_col:
     st.markdown("""
@@ -431,12 +428,12 @@ with right_col:
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 6px;
-            color: #f1e592;
+            color: white;
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
         .stTextArea label {
-            color: #f1e592 !important;
+            color: white !important;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -451,4 +448,3 @@ with right_col:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130)
         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
