@@ -321,7 +321,7 @@ with right_col:
             border: 1px solid #444;
             padding: 16px;
             border-radius: 6px;
-            background-color: rgba(255,255,255,0.02);
+            background-color: rgba(255,255,255,0.08);
             margin-bottom: 20px;
         }
     </style>
