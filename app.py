@@ -205,37 +205,65 @@ with left_col:
     """, unsafe_allow_html=True)
 
 
+# with right_col:
+#     right_box_style = """
+#         <style>
+#             .left-section-title {
+#                 font-family: Georgia, serif;
+#                 font-size: 18px;
+#                 font-weight: bold;
+#                 text-transform: uppercase;
+#                 margin-bottom: 10px;
+#                 text-align: center;
+#             }
+#         </style>
+#     """
+#     st.markdown(left_box_style, unsafe_allow_html=True)
+
+#     cols = st.columns([0.6, 0.1])
+#     with cols[0]:
+#         st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
+#         interp = st.text_area("What are we seeing in the macro environment?", height=130)
+
+#     st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
+
+#     cols = st.columns([0.6, 0.1])
+#     with cols[0]:
+#         st.markdown("<div class='section-title'>Top Strategy Note</div>", unsafe_allow_html=True)
+#         outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+
+#     st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
+
+#     cols = st.columns([0.6, 0.1])
+#     with cols[0]:
+#         st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
+#         conclusion = st.text_area("Summary and suggested action", height=130)
 with right_col:
     right_box_style = """
         <style>
-            .left-section-title {
+            .section-title {
                 font-family: Georgia, serif;
                 font-size: 18px;
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-bottom: 10px;
                 text-align: center;
+                color: white;
+                border-bottom: 1px solid #555;
+                padding-bottom: 4px;
             }
         </style>
     """
-    st.markdown(left_box_style, unsafe_allow_html=True)
+    st.markdown(right_box_style, unsafe_allow_html=True)  # ✅ Apply the right_box_style, not left_box_style
 
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
-        interp = st.text_area("What are we seeing in the macro environment?", height=130)
-
-    st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Top Strategy Note</div>", unsafe_allow_html=True)
-        outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
-
-    st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
-    cols = st.columns([0.6, 0.1])
-    with cols[0]:
-        st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
-        conclusion = st.text_area("Summary and suggested action", height=130)
+    for title, placeholder in [
+        ("Market Insight", "What are we seeing in the macro environment?"),
+        ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
+        ("Trader's Conclusion", "Summary and suggested action")
+    ]:
+        cols = st.columns([0.6, 0.1])
+        with cols[0]:
+            st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
+            st.text_area(placeholder, height=130)
+        st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
