@@ -126,8 +126,8 @@ st.markdown(
     """
     <style>
         .block-container {
-            padding-left: 4rem;
-            padding-right: 4rem;
+            padding-left: 10rem;
+            padding-right: 10rem;
         }
     </style>
     """,
