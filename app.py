@@ -335,15 +335,15 @@ with left_col:
 # PORTFOLIO HOLDINGS just below the pie chart, aligned to the right
 st.markdown("### Portfolio Holdings")
 bullets = " ".join([
-    f"<span style='margin-left: 20px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</span>"
+    f"<span style='margin: 0 12px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</span>"
     for asset, weight in current_alloc.items()
 ])
 st.markdown(
     f"""
     <div style='
         display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        justify-content: center;
+        align-items: center;
         margin-top: -10px;
         margin-bottom: 30px;
     '>
