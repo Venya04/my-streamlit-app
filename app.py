@@ -218,14 +218,14 @@ with right_col:
         st.subheader("Market Insight")
         interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
-    st.markdown("<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 7px;'></div>", unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
         st.subheader("Top Strategy Note")
         outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
 
-    st.markdown("<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 7px;'></div>", unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
