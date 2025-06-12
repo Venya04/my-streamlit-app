@@ -206,18 +206,19 @@ with left_col:
 
 
 with right_col:
-    box_style = """
+    right_box_style = """
         <style>
-            .section-title {
+            .left-section-title {
                 font-family: Georgia, serif;
                 font-size: 18px;
                 font-weight: bold;
                 text-transform: uppercase;
-                margin-bottom: 4px;
+                margin-bottom: 10px;
+                text-align: center;
             }
         </style>
     """
-    st.markdown(box_style, unsafe_allow_html=True)
+    st.markdown(left_box_style, unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
