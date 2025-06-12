@@ -136,54 +136,90 @@ st.markdown(
 
 
 # === LAYOUT ===
+# left_col, right_col = st.columns([1, 1])
+
+# # LEFT — Pie Chart and Portfolio Holdings below
+# # === Pie chart and aligned holdings ===
+# with st.container():
+#     chart_col, info_col = st.columns([6, 5])  # narrower right side to balance whitespace
+#     with chart_col:
+#         # Pie chart
+#         if current_alloc:
+#             fig_pie = px.pie(
+#                 names=list(current_alloc.keys()),
+#                 values=list(current_alloc.values()),
+#                 hole=0.0,
+#                 color=list(current_alloc.keys()),
+#                 color_discrete_map={
+#                     "stocks": "#00bf63",
+#                     "stablecoins": "#ff5757",
+#                     "cash": "#ff3131",
+#                     "crypto": "#25a159",
+#                     "commodities": "#f4b70f",
+#                 }
+#             )
+#             fig_pie.update_traces(
+#                 textinfo='percent',
+#                 textfont_size=16,
+#                 pull=[0.03] * len(current_alloc),
+#                 marker=dict(line=dict(color="#000000", width=2))
+#             )
+#             fig_pie.update_layout(
+#                 showlegend=False,
+#                 margin=dict(t=10, b=10, l=10, r=10),
+#                 paper_bgcolor='rgba(0,0,0,0)',
+#                 plot_bgcolor='rgba(0,0,0,0)',
+#             )
+#             st.plotly_chart(fig_pie, use_container_width=True)
+
+#         # Centered Portfolio Holdings below the chart only
+# st.markdown("""
+# <div style='margin-top: -70px; margin-left: 60px;'>
+#     <h4 style='text-align: left; margin-bottom: 6px;'>Portfolio Holdings</h4>
+#     <ul style='padding-left: 20px; list-style-type: disc;'>
+# """ + "".join([
+#     f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+#     for asset, weight in current_alloc.items()
+# ]) + """
+#     </ul>
+# </div>
+# """, unsafe_allow_html=True)
 left_col, right_col = st.columns([1, 1])
 
-# LEFT — Pie Chart and Portfolio Holdings below
-# === Pie chart and aligned holdings ===
-with st.container():
-    chart_col, info_col = st.columns([6, 5])  # narrower right side to balance whitespace
-    with chart_col:
-        # Pie chart
-        if current_alloc:
-            fig_pie = px.pie(
-                names=list(current_alloc.keys()),
-                values=list(current_alloc.values()),
-                hole=0.0,
-                color=list(current_alloc.keys()),
-                color_discrete_map={
-                    "stocks": "#00bf63",
-                    "stablecoins": "#ff5757",
-                    "cash": "#ff3131",
-                    "crypto": "#25a159",
-                    "commodities": "#f4b70f",
-                }
-            )
-            fig_pie.update_traces(
-                textinfo='percent',
-                textfont_size=16,
-                pull=[0.03] * len(current_alloc),
-                marker=dict(line=dict(color="#000000", width=2))
-            )
-            fig_pie.update_layout(
-                showlegend=False,
-                margin=dict(t=10, b=10, l=10, r=10),
-                paper_bgcolor='rgba(0,0,0,0)',
-                plot_bgcolor='rgba(0,0,0,0)',
-            )
-            st.plotly_chart(fig_pie, use_container_width=True)
+with left_col:
+    # Pie chart
+    if current_alloc:
+        fig_pie = px.pie(
+            names=list(current_alloc.keys()),
+            values=list(current_alloc.values()),
+            hole=0.0,
+            color=list(current_alloc.keys()),
+            color_discrete_map={
+                "stocks": "#00bf63",
+                "stablecoins": "#ff5757",
+                "cash": "#ff3131",
+                "crypto": "#25a159",
+                "commodities": "#f4b70f",
+            }
+        )
+        fig_pie.update_traces(
+            textinfo='percent',
+            textfont_size=16,
+            pull=[0.03] * len(current_alloc),
+            marker=dict(line=dict(color="#000000", width=2))
+        )
+        fig_pie.update_layout(
+            showlegend=False,
+            margin=dict(t=10, b=10, l=10, r=10),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+        )
+        st.plotly_chart(fig_pie, use_container_width=True)
 
-        # Centered Portfolio Holdings below the chart only
-st.markdown("""
-<div style='margin-top: -70px; margin-left: 60px;'>
-    <h4 style='text-align: left; margin-bottom: 6px;'>Portfolio Holdings</h4>
-    <ul style='padding-left: 20px; list-style-type: disc;'>
-""" + "".join([
-    f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-    for asset, weight in current_alloc.items()
-]) + """
-    </ul>
-</div>
-""", unsafe_allow_html=True)
+    # Portfolio holdings directly under chart
+    st.markdown("#### Portfolio Holdings")
+    for asset, weight in current_alloc.items():
+        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
 
 
