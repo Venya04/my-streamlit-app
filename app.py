@@ -167,14 +167,23 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    # Portfolio holdings directly under chart
-    # st.markdown("#### Portfolio Holdings")
-    # for asset, weight in current_alloc.items():
-    #     st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
+# st.markdown("""
+# <div style='margin-top: -210px; margin-left: 95px;'>
+#     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
+#     <ul style='padding-left: 20px;'>
+# """ + "".join([
+#     f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+#     for asset, weight in current_alloc.items()
+# ]) + """
+#     </ul>
+# </div>
+# """, unsafe_allow_html=True)
+# Wrap chart and portfolio holdings in a flex container
 st.markdown("""
-<div style='margin-top: -210px; margin-left: 95px;'>
+<div style='display: flex; flex-direction: column; align-items: flex-start; margin-top: -30px; margin-left: 0px; width: fit-content;'>
     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
-    <ul style='padding-left: 20px;'>
+    <ul style='padding-left: 20px; margin-top: 0;'>
 """ + "".join([
     f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
     for asset, weight in current_alloc.items()
