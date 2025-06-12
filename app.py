@@ -170,7 +170,7 @@ with left_col:
 
     # === PORTFOLIO HOLDINGS RIGHT UNDER PIE CHART ===
     st.markdown("""
-        <div style='text-align: center; margin-top: 15px;'>
+        <div style='text-align: center; margin-top: 25px;'>
             <h4 style='margin-bottom: 10px;'>Portfolio Holdings</h4>
             <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
     """ + "".join([
