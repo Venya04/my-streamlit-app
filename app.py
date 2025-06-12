@@ -183,17 +183,17 @@ with left_col:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     # === PORTFOLIO HOLDINGS RIGHT UNDER PIE CHART ===
-st.markdown("""
-    <div style='text-align: center; margin-top: 25px;'>
-        <div class='left-section-title'>Portfolio Holdings</div>
-        <ul style='padding-left: 20; list-style-position: inside; text-align: left; display: inline-block;'>
-""" + "".join([
-    f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-    for asset, weight in current_alloc.items()
-]) + """
-        </ul>
-    </div>
-""", unsafe_allow_html=True)
+    st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style='text-align: center; margin-top: -5px;'>
+            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
+    """ + "".join([
+        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+        for asset, weight in current_alloc.items()
+    ]) + """
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
 
 
 
