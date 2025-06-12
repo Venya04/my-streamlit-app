@@ -308,7 +308,6 @@
 
 
 
-
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -397,64 +396,65 @@ def backtest(prices, returns, regime_df, allocations):
 
 portfolio_returns = backtest(prices, returns, regime_df, allocations)
 
-# === REGIME & ALLOCATION ===
+# === CURRENT REGIME & ALLOCATION ===
 latest_date = regime_df.index[-1]
 current_regime = regime_df.loc[latest_date, "regime"]
 current_alloc = allocations.get(current_regime, {})
 
 # === HEADER ===
 st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+<style>
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
-    .gothic-title {
-        font-family: 'UnifrakturCook', serif;
-        text-align: center;
-        font-size: 5vw;
-        font-weight: bold;
-        padding: 0.5rem 0;
-        letter-spacing: 1px;
-    }
-    .pub-info {
-        text-align: center;
-        font-family: 'Georgia', serif;
-        font-size: 1.2vw;
-        margin-top: -18px;
-        color: #ccc;
-    }
-    .block-container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 2vw;
-    }
-    .section-title {
-        font-family: Georgia, serif;
-        font-size: 1.4vw;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 0.5vw;
-        color: #d4af37;
-        border-bottom: 1px solid #555;
-        padding-bottom: 0.3vw;
-    }
-    .left-section-title {
-        font-family: Georgia, serif;
-        font-size: 1.2vw;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 1vw;
-        text-align: center;
-    }
-    </style>
-    <div class='gothic-title'>The Regime Report</div>
-    <div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
-    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; font-size: 2vw;'>
-        Asset Allocation in Current Market Conditions
-    </h3>
+.block-container {
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.gothic-title {
+    font-family: 'UnifrakturCook', serif;
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    padding: 0.5rem 0;
+    letter-spacing: 1px;
+}
+.pub-info {
+    text-align: center;
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    margin-top: -18px;
+    color: #ccc;
+}
+.section-title {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: #f5f5f5;
+    border-bottom: 1px solid #555;
+    padding-bottom: 4px;
+}
+.left-section-title {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #f5f5f5;
+}
+</style>
+<div class='gothic-title'>The Regime Report</div>
+<div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
+<h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
+    Asset Allocation in Current Market Conditions
+</h3>
 """, unsafe_allow_html=True)
 
-# === MAIN LAYOUT ===
-left_col, right_col = st.columns([2, 1])
+# === LAYOUT ===
+left_col, right_col = st.columns([1.3, 1])
 
 with left_col:
     if current_alloc:
@@ -464,11 +464,11 @@ with left_col:
             hole=0.0,
             color=list(current_alloc.keys()),
             color_discrete_map={
-                "stocks": "#102030",
-                "stablecoins": "#3A3A3A",
-                "cash": "#5C5149",
-                "crypto": "#2F4F4F",
-                "commodities": "#6B4E23",
+                "stocks": "#2B3A42",
+                "crypto": "#587B7F",
+                "commodities": "#A1866F",
+                "stablecoins": "#6C5F5B",
+                "cash": "#B8A290",
             }
         )
         fig_pie.update_traces(
@@ -479,37 +479,41 @@ with left_col:
         )
         fig_pie.update_layout(
             showlegend=False,
-            autosize=True,
             margin=dict(t=10, b=10, l=10, r=10),
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    html = """
-    <div style='text-align: center; margin-top: -5px;'>
-        <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
-"""
-for asset, weight in current_alloc.items():
-    html += f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-html += """
-        </ul>
-    </div>
-"""
-st.markdown(html, unsafe_allow_html=True)
+    st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
+    st.markdown(
+        f"""
+        <div style='text-align: center; margin-top: -5px;'>
+            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
+                {''.join([f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>" for asset, weight in current_alloc.items()])}
+            </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 with right_col:
-    for title, placeholder in [
+    st.markdown("""
+    <style>
+        .section-box {
+            margin-bottom: 20px;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
         ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
         ("Trader's Conclusion", "Summary and suggested action")
-    ]:
+    ]
+
+    for title, placeholder in sections:
         cols = st.columns([0.9, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130, label_visibility="collapsed")
-
-
-
-
-
