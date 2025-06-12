@@ -186,13 +186,13 @@ with left_col:
 #     "commodities": "#aa8c5f",   # Bronze Gold
 # }
 
-color_discrete_map = {
-    "stocks": "#1E3A5F",       # Deep Navy
-    "stablecoins": "#7C6C57",  # Faded Taupe
-    "cash": "#B1A296",         # Vintage Beige
-    "crypto": "#5E5A59",       # Charcoal Gray
-    "commodities": "#AA8C5F",  # Bronze Gold
-}
+# color_discrete_map = {
+#     "stocks": "#1E3A5F",       # Deep Navy
+#     "stablecoins": "#7C6C57",  # Faded Taupe
+#     "cash": "#B1A296",         # Vintage Beige
+#     "crypto": "#5E5A59",       # Charcoal Gray
+#     "commodities": "#AA8C5F",  # Bronze Gold
+# }
 # color_discrete_map = {
 #     "stocks": "#444444",       # Dark Gray
 #     "stablecoins": "#666666",  # Mid Gray
@@ -201,13 +201,13 @@ color_discrete_map = {
 #     "commodities": "#CCCCCC",  # Pale Gray
 # }
 
-# color_discrete_map = {
-#     "stocks": "#102030",       # Slate Navy
-#     "stablecoins": "#3A3A3A",  # Gunmetal Gray
-#     "cash": "#5C5149",         # Smoked Taupe
-#     "crypto": "#2F4F4F",       # Dark Slate Gray
-#     "commodities": "#6B4E23",  # Aged Bronze
-# }
+color_discrete_map = {
+    "stocks": "#102030",       # Slate Navy
+    "stablecoins": "#3A3A3A",  # Gunmetal Gray
+    "cash": "#5C5149",         # Smoked Taupe
+    "crypto": "#2F4F4F",       # Dark Slate Gray
+    "commodities": "#6B4E23",  # Aged Bronze
+}
 
 
 
