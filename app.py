@@ -176,7 +176,7 @@ with st.container():
   # --- PORTFOLIO HOLDINGS ---
         st.markdown("""
         <div style='text-align: center; margin-top: -8px;'>
-            <h4 style='margin-bottom: 8px;'>Portfolio Holdings</h4>
+            <h4 style='margin-bottom: 15px;'>Portfolio Holdings</h4>
             <div style='
                 display: inline-block;
                 text-align: left;
