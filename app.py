@@ -180,7 +180,7 @@ with st.container():
             <div style='
                 display: inline-block;
                 text-align: left;
-                width: 225px;
+                width: 235px;
             '>
                 <ul style='padding-left: 20px; list-style-type: disc;'>
         """ + "".join([
