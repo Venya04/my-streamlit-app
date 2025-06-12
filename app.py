@@ -463,13 +463,13 @@ with left_col:
             values=list(current_alloc.values()),
             hole=0.0,
             color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#2B3A42",
-                "crypto": "#587B7F",
-                "commodities": "#A1866F",
-                "stablecoins": "#6C5F5B",
-                "cash": "#B8A290",
-            }
+           color_discrete_map = {
+    "stocks": "#102030",       # Slate Navy
+    "stablecoins": "#3A3A3A",  # Gunmetal Gray
+    "cash": "#5C5149",         # Smoked Taupe
+    "crypto": "#2F4F4F",       # Dark Slate Gray
+    "commodities": "#6B4E23",  # Aged Bronze
+}
         )
         fig_pie.update_traces(
             textinfo='percent',
@@ -497,23 +497,52 @@ with left_col:
         unsafe_allow_html=True
     )
 
-with right_col:
-    st.markdown("""
-    <style>
-        .section-box {
-            margin-bottom: 20px;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+# with right_col:
+#     st.markdown("""
+#     <style>
+#         .section-box {
+#             margin-bottom: 20px;
+#         }
+#     </style>
+#     """, unsafe_allow_html=True)
 
-    sections = [
+#     sections = [
+#         ("Market Insight", "What are we seeing in the macro environment?"),
+#         ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
+#         ("Trader's Conclusion", "Summary and suggested action")
+#     ]
+
+#     for title, placeholder in sections:
+#         cols = st.columns([0.9, 0.1])
+#         with cols[0]:
+#             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
+#             st.text_area(placeholder, height=130, label_visibility="collapsed")
+
+with right_col:
+    right_box_style = """
+        <style>
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                text-align: left;
+                color: white;
+                border-bottom: 1px solid #555;
+                padding-bottom: 4px;
+            }
+        </style>
+    """
+    st.markdown(right_box_style, unsafe_allow_html=True)  # ✅ Apply the right_box_style, not left_box_style
+
+    for title, placeholder in [
         ("Market Insight", "What are we seeing in the macro environment?"),
         ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
         ("Trader's Conclusion", "Summary and suggested action")
-    ]
-
-    for title, placeholder in sections:
-        cols = st.columns([0.9, 0.1])
+    ]:
+        cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.text_area(placeholder, height=130, label_visibility="collapsed")
+            st.text_area(placeholder, height=130)
+        st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
