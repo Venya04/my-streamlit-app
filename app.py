@@ -175,12 +175,12 @@ with st.container():
         # Centered Portfolio Holdings below the chart only
   # --- PORTFOLIO HOLDINGS ---
         st.markdown("""
-        <div style='text-align: center; margin-top: -10px;'>
+        <div style='text-align: center; margin-top: -15px;'>
             <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
             <div style='
                 display: inline-block;
                 text-align: left;
-                width: 235px;
+                width: 335px;
             '>
                 <ul style='padding-left: 20px; list-style-type: disc;'>
         """ + "".join([
