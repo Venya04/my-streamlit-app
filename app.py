@@ -173,25 +173,24 @@ with st.container():
             st.plotly_chart(fig_pie, use_container_width=True)
 
         # Centered Portfolio Holdings below the chart only
-  # --- PORTFOLIO HOLDINGS ---
-        st.markdown("""
-        <div style='text-align: center; margin-top: -8px;'>
-            <h4 style='text-align: center; margin: 10px 0 5px 0;'>Portfolio Holdings</h4>
-
-            <div style='
-                display: inline-block;
-                text-align: left;
-                width: 435px;
-            '>
-                <ul style='padding-left: 20px; list-style-type: disc;'>
-        """ + "".join([
-            f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-            for asset, weight in current_alloc.items()
-        ]) + """
-                </ul>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+st.markdown("""
+<div style='text-align: center; margin-top: -10px;'>
+    <h4 style='text-align: left; margin: 10px 0 5px 30px;'>Portfolio Holdings</h4>
+    <div style='
+        display: inline-block;
+        text-align: left;
+        width: 220px;
+        margin-left: 30px;
+    '>
+        <ul style='padding-left: 20px; list-style-type: disc;'>
+""" + "".join([
+    f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+    for asset, weight in current_alloc.items()
+]) + """
+        </ul>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 with info_col:
