@@ -148,6 +148,21 @@ st.markdown(
 left_col, right_col = st.columns([1.3, 1])
 
 with left_col:
+    left_box_style = """
+        <style>
+            .left-section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+        </style>
+    """
+    st.markdown(left_box_style, unsafe_allow_html=True)
+
+    # === PIE CHART ===
     if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
@@ -176,19 +191,34 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    st.markdown("<div class='section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='text-align: center; margin-top: -5px;'>"
-        "<ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>"
-        + "".join([
-            f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-            for asset, weight in current_alloc.items()
-        ]) +
-        "</ul></div>",
-        unsafe_allow_html=True
-    )
+    # === PORTFOLIO HOLDINGS RIGHT UNDER PIE CHART ===
+    st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style='text-align: center; margin-top: -5px;'>
+            <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
+    """ + "".join([
+        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+        for asset, weight in current_alloc.items()
+    ]) + """
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
+
 
 with right_col:
+    box_style = """
+        <style>
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+        </style>
+    """
+    st.markdown(box_style, unsafe_allow_html=True)
+
     cols = st.columns([0.6, 0.1])
     with cols[0]:
         st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
@@ -207,3 +237,4 @@ with right_col:
     with cols[0]:
         st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
         conclusion = st.text_area("Summary and suggested action", height=130)
+
