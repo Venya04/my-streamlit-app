@@ -127,61 +127,67 @@ st.markdown("---")
 left_col, right_col = st.columns([2, 2])
 
 # LEFT — Pie Chart and Portfolio Holdings below
-with left_col:
-    if current_alloc:
-        fig_pie = px.pie(
-            names=list(current_alloc.keys()),
-            values=list(current_alloc.values()),
-            hole=0.0,
-            color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#00bf63",
-                "stablecoins": "#ff5757",
-                "cash": "#ff3131",
-                "crypto": "#25a159",
-                "commodities": "#f4b70f",
-            }
-        )
-        fig_pie.update_traces(
-            textinfo='percent',
-            textfont_size=16,
-            pull=[0.03] * len(current_alloc),
-            marker=dict(line=dict(color="#000000", width=2))
-        )
-        fig_pie.update_layout(
-            showlegend=False,
-            margin=dict(t=10, b=10, l=10, r=10),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
+# === Pie chart and aligned holdings ===
+with st.container():
+    chart_col, info_col = st.columns([2, 1])
 
-# === Portfolio Holdings centered under pie chart ===
-st.markdown("""
-<div style='text-align: center; margin-top: -10px;'>
-    <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
-    <div style='
-        display: inline-block;
-        text-align: left;
-        width: 500px;
-    '>
-        <ul style='display: flex; flex-wrap: wrap; justify-content: space-between; padding-left: 0; list-style: none;'>
-            """ + "".join([
-                f"<li style='margin: 4px 12px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-                for asset, weight in current_alloc.items()
-            ]) + """
-        </ul>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+    with chart_col:
+        # Pie chart
+        if current_alloc:
+            fig_pie = px.pie(
+                names=list(current_alloc.keys()),
+                values=list(current_alloc.values()),
+                hole=0.0,
+                color=list(current_alloc.keys()),
+                color_discrete_map={
+                    "stocks": "#00bf63",
+                    "stablecoins": "#ff5757",
+                    "cash": "#ff3131",
+                    "crypto": "#25a159",
+                    "commodities": "#f4b70f",
+                }
+            )
+            fig_pie.update_traces(
+                textinfo='percent',
+                textfont_size=16,
+                pull=[0.03] * len(current_alloc),
+                marker=dict(line=dict(color="#000000", width=2))
+            )
+            fig_pie.update_layout(
+                showlegend=False,
+                margin=dict(t=10, b=10, l=10, r=10),
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+            )
+            st.plotly_chart(fig_pie, use_container_width=True)
 
-# RIGHT — Text Boxes (3 stacked)
-with right_col:
-    st.subheader("Market Insight")
-    interp = st.text_area("What are we seeing in the macro environment?", height=130)
+        # Centered Portfolio Holdings below the chart only
+        st.markdown("""
+        <div style='text-align: center; margin-top: -10px;'>
+            <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
+            <div style='
+                display: inline-block;
+                text-align: left;
+                width: 420px;
+            '>
+                <ul style='display: flex; flex-wrap: wrap; justify-content: space-between; padding-left: 0; list-style: none;'>
+        """ + "".join([
+            f"<li style='margin: 4px 12px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+            for asset, weight in current_alloc.items()
+        ]) + """
+                </ul>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.subheader("Strategy Note")
-    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+    # Right-side insights
+    with info_col:
+        st.subheader("Market Insight")
+        interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
-    st.subheader("Trader's Conclusion")
-    conclusion = st.text_area("Summary and suggested action", height=130)
+        st.subheader("Strategy Note")
+        outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+
+        st.subheader("Trader's Conclusion")
+        conclusion = st.text_area("Summary and suggested action", height=130)
+
