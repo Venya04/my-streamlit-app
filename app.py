@@ -562,14 +562,13 @@ with right_col:
         </style>
     """, unsafe_allow_html=True)
 
-    for title, comment in [
+    for title, placeholder in [
         ("Market Insight", "What are we seeing in the macro environment?"),
         ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
         ("Trader's Conclusion", "Summary and suggested action")
     ]:
-        cols = st.columns([0.9, 0.1])
+        cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='section-comment'>{comment}</div>", unsafe_allow_html=True)
-            st.text_area(label="", height=130, label_visibility="collapsed")
+            st.text_area(placeholder, height=130)
         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
