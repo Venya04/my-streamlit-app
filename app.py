@@ -174,8 +174,8 @@ with st.container():
 
         # Centered Portfolio Holdings below the chart only
 st.markdown("""
-<div style='margin-top: -10px; margin-left: 60px;'>
-    <h4 style='text-align: left; margin-bottom: 8px;'>Portfolio Holdings</h4>
+<div style='margin-top: -50px; margin-left: 60px;'>
+    <h4 style='text-align: left; margin-bottom: 6px;'>Portfolio Holdings</h4>
     <ul style='padding-left: 20px; list-style-type: disc;'>
 """ + "".join([
     f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
@@ -184,6 +184,7 @@ st.markdown("""
     </ul>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
