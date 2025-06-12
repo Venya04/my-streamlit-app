@@ -476,7 +476,7 @@ with left_col:
         </style>
     """, unsafe_allow_html=True)
 
-    if current_alloc:
+if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
             values=list(current_alloc.values()),
@@ -519,21 +519,23 @@ with left_col:
         unsafe_allow_html=True
     )
 
+
 with right_col:
     st.markdown("""
-        <style>
-            .section-title {
-                font-family: Georgia, serif;
-                font-size: 18px;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 6px;
-                color: white;
-                border-bottom: 1px solid #555;
-                padding-bottom: 4px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+    <style>
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: white;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 
     sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
@@ -550,6 +552,7 @@ with right_col:
                 unsafe_allow_html=True
             )
             st.text_area(placeholder, height=130, label_visibility="collapsed")
+
 
 
 
