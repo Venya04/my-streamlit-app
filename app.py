@@ -181,7 +181,7 @@ with left_col:
 # """, unsafe_allow_html=True)
 # Wrap chart and portfolio holdings in a flex container
 st.markdown("""
-<div style='display: flex; flex-direction: column; align-items: flex-start; margin-top: -30px; margin-left: 0px; width: fit-content;'>
+<div style='display: flex; flex-direction: column; align-items: flex-start; margin-top: -210px; margin-left: 95px; width: fit-content;'>
     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
     <ul style='padding-left: 20px; margin-top: 0;'>
 """ + "".join([
