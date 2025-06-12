@@ -520,21 +520,20 @@ with left_col:
     )
 
 with right_col:
-   st.markdown("""
-<style>
-.section-title {
-    font-family: Georgia, serif;
-    font-size: 18px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    color: white;
-    border-bottom: 1px solid #555;
-    padding-bottom: 4px;
-}
-</style>
-""", unsafe_allow_html=True)
-
+    st.markdown("""
+        <style>
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+                color: white;
+                border-bottom: 1px solid #555;
+                padding-bottom: 4px;
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
     sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
@@ -546,6 +545,9 @@ with right_col:
         cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.markdown("<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>", unsafe_allow_html=True)
+            st.markdown(
+                "<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>",
+                unsafe_allow_html=True
+            )
             st.text_area(placeholder, height=130, label_visibility="collapsed")
 
