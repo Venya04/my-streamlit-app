@@ -152,9 +152,8 @@ with left_col:
             padding-bottom: 4px;
         }
     </style>
-"""
-
-    st.markdown(left_box_style, unsafe_allow_html=True)  # ✅ FIXED INDENTATION
+    """
+    st.markdown(right_box_style, unsafe_allow_html=True)
 
     # === PIE CHART ===
     if current_alloc:
