@@ -343,7 +343,7 @@ st.markdown(
         justify-content: left;
         align-items: left;
         margin-top: -10px;
-        margin-bottom: 10px;
+        margin-bottom: 30px;
     '>
         {bullets}
     </div>
