@@ -503,21 +503,27 @@ with left_col:
     )
 
 with right_col:
-    st.markdown("""
-        <style>
-            .section-title {
-                font-family: Georgia, serif;
-                font-size: 1.1rem;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 10px;
-                text-align: left;
-                color: white;
-                border-bottom: 1px solid #555;
-                padding-bottom: 4px;
+   st.markdown("""
+    <style>
+        .responsive-title {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-align: left;
+            color: white;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
+        }
+        @media (max-width: 768px) {
+            .responsive-title {
+                font-size: 14px;
             }
-        </style>
-    """, unsafe_allow_html=True)
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 
     for title, placeholder in [
         ("Market Insight", "What are we seeing in the macro environment?"),
