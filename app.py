@@ -174,14 +174,14 @@ with st.container():
 
         # Centered Portfolio Holdings below the chart only
        st.markdown("""
-<div style='text-align: left; margin-top: -10px;'>
+<div style='text-align: center; margin-top: -10px;'>
     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
     <div style='
         display: inline-block;
         text-align: left;
         width: 200px;
     '>
-        <ul style='padding-left: 0; list-style: none;'>
+        # <ul style='padding-left: 0; list-style: none;'>
 """ + "".join([
     f"<li style='margin: 4px 0;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
     for asset, weight in current_alloc.items()
