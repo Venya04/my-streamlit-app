@@ -535,24 +535,25 @@ with left_col:
 with right_col:
     st.markdown("""
         <style>
-            .responsive-title {
+            .section-title {
                 font-family: Georgia, serif;
                 font-size: 18px;
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-bottom: 10px;
                 text-align: left;
-                color: white;
+                color: white; /* override gold */
                 border-bottom: 1px solid #555;
                 padding-bottom: 4px;
             }
             @media (max-width: 768px) {
-                .responsive-title {
+                .section-title {
                     font-size: 14px;
                 }
             }
         </style>
     """, unsafe_allow_html=True)
+
 
     for title, placeholder in [
         ("Market Insight", "What are we seeing in the macro environment?"),
