@@ -520,32 +520,36 @@ with left_col:
     )
 
 with right_col:
-    right_box_style = """
+    st.markdown("""
         <style>
             .section-title {
                 font-family: Georgia, serif;
                 font-size: 18px;
                 font-weight: bold;
                 text-transform: uppercase;
-                margin-bottom: 10px;
-                text-align: left;
+                margin-bottom: 6px;
                 color: white;
                 border-bottom: 1px solid #555;
                 padding-bottom: 4px;
             }
         </style>
-    """
-    st.markdown(right_box_style, unsafe_allow_html=True)  # ✅ Apply the right_box_style, not left_box_style
+    """, unsafe_allow_html=True)
 
-    for title, placeholder in [
+    sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
         ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
         ("Trader's Conclusion", "Summary and suggested action")
-    ]:
+    ]
+
+    for title, placeholder in sections:
         cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.text_area(placeholder, height=130)
-        st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
+            st.markdown(
+                "<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>",
+                unsafe_allow_html=True
+            )
+            st.text_area(placeholder, height=130, label_visibility="collapsed")
+
 
 
