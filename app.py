@@ -138,7 +138,6 @@ st.markdown(
 # Side-by-side layout
 left_col, right_col = st.columns([1.3, 1])
 
-
 with left_col:
     left_box_style = """
         <style>
@@ -152,8 +151,8 @@ with left_col:
             }
         </style>
     """
+    st.markdown(left_box_style, unsafe_allow_html=True)  # ✅ FIXED INDENTATION
 
- st.markdown(left_box_style, unsafe_allow_html=True)
     # === PIE CHART ===
     if current_alloc:
         fig_pie = px.pie(
