@@ -106,8 +106,16 @@ st.markdown(
         padding: 0.5rem 0;
         letter-spacing: 1px;
     }
+    .pub-info {
+        text-align: center;
+        font-family: Georgia, serif;
+        font-size: 13px;
+        margin-top: -18px;
+        color: #ccc;
+    }
     </style>
     <div class='gothic-title'>The Regime Report</div>
+    <div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
     <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
         Asset Allocation in Current Market Conditions
     </h3>
@@ -117,11 +125,10 @@ st.markdown(
 st.markdown("---")
 
 # === MAIN BODY ===
-left_col, right_col = st.columns([2, 1])
+main_col1, main_col2 = st.columns([3, 2])
 
-with left_col:
+with main_col1:
     pie_col, holdings_col = st.columns([2, 1])
-
     with pie_col:
         if current_alloc:
             fig_pie = px.pie(
@@ -150,22 +157,18 @@ with left_col:
                 plot_bgcolor='rgba(0,0,0,0)',
             )
             st.plotly_chart(fig_pie, use_container_width=True)
-
     with holdings_col:
         st.markdown("### Portfolio Holdings")
         for asset, weight in current_alloc.items():
             st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
-with right_col:
-    st.subheader("Interpretation of Data")
+with main_col2:
+    st.markdown("### Market Insight")
     interp = st.text_area("What are we seeing in the macro environment?", height=130)
-
-    st.subheader("Personal Outlook")
+    st.markdown("### Strategy Note")
     outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
 
 st.markdown("---")
-st.subheader("Conclusion")
+st.markdown("### Trader's Conclusion")
 conclusion = st.text_area("Summary and suggested action", height=100)
-
-
 
