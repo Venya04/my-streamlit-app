@@ -121,7 +121,19 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-st.markdown("---")
+# st.markdown("---")
+st.markdown(
+    """
+    <style>
+        .block-container {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # === LAYOUT ===
 left_col, right_col = st.columns([1, 1])
