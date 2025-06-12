@@ -424,7 +424,7 @@ with left_col:
     )
 
 with right_col:
-   right_box_style = """
+    right_box_style = """
     <style>
         .section-title {
             font-family: Georgia, serif;
@@ -432,14 +432,16 @@ with right_col:
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 6px;
-            color: #d4af37; /* light gold */
+            color: #f1e592; /* updated to light gold */
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
+        .stTextArea label {
+            color: #f1e592 !important;
+        }
     </style>
-"""
-st.markdown(box_style, unsafe_allow_html=True)
-
+    """
+    st.markdown(right_box_style, unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
