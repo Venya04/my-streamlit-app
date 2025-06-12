@@ -135,10 +135,11 @@ st.markdown(
 )
 
 
-left_col, right_col = st.columns([1, 1])
+# Side-by-side layout
+left_col, right_col = st.columns([1.3, 1])
 
 with left_col:
-    # Pie chart
+    # === PIE CHART ===
     if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
@@ -167,6 +168,18 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
+    # === PORTFOLIO HOLDINGS RIGHT UNDER PIE CHART ===
+    st.markdown("""
+        <div style='text-align: center; margin-top: -30px;'>
+            <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
+            <ul style='padding-left: 0; list-style-position: inside; text-align: left; display: inline-block;'>
+    """ + "".join([
+        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+        for asset, weight in current_alloc.items()
+    ]) + """
+            </ul>
+        </div>
+    """, unsafe_allow_html=True)
 
 # st.markdown("""
 # <div style='margin-top: -210px; margin-left: 95px;'>
@@ -180,17 +193,17 @@ with left_col:
 # </div>
 # """, unsafe_allow_html=True)
 # Wrap chart and portfolio holdings in a flex container
-st.markdown("""
-<div style='display: flex; flex-direction: column; align-items: flex-start; margin-top: -210px; margin-left: 95px; width: fit-content;'>
-    <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
-    <ul style='padding-left: 20px; margin-top: 0;'>
-""" + "".join([
-    f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-    for asset, weight in current_alloc.items()
-]) + """
-    </ul>
-</div>
-""", unsafe_allow_html=True)
+# st.markdown("""
+# <div style='display: flex; flex-direction: column; align-items: flex-start; margin-top: -210px; margin-left: 95px; width: fit-content;'>
+#     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
+#     <ul style='padding-left: 20px; margin-top: 0;'>
+# """ + "".join([
+#     f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+#     for asset, weight in current_alloc.items()
+# ]) + """
+#     </ul>
+# </div>
+# """, unsafe_allow_html=True)
 
 
 
