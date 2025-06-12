@@ -234,7 +234,6 @@
 #     with cols[0]:
 #         st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
 #         conclusion = st.text_area("Summary and suggested action", height=130)
-
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -409,19 +408,19 @@ with left_col:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     st.markdown("<div class='section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
-    st.markdown(
-        """
+
+    list_items = "".join([
+        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+        for asset, weight in current_alloc.items()
+    ])
+
+    st.markdown(f"""
         <div style='text-align: center; margin-top: -5px;'>
             <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block; color: #f1e592;'>
-        """ + """".join([
-            f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-            for asset, weight in current_alloc.items()
-        ]) + """
+                {list_items}
             </ul>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
 with right_col:
     st.markdown("""
@@ -432,7 +431,7 @@ with right_col:
             font-weight: bold;
             text-transform: uppercase;
             margin-bottom: 6px;
-            color: #f1e592; /* light gold */
+            color: #f1e592;
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
@@ -452,3 +451,4 @@ with right_col:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130)
         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
+
