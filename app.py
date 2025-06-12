@@ -195,8 +195,6 @@ with left_col:
         </div>
     """, unsafe_allow_html=True)
 
-
-
 with right_col:
     box_style = """
         <style>
@@ -210,6 +208,7 @@ with right_col:
         </style>
     """
     st.markdown(box_style, unsafe_allow_html=True)
+    
     cols = st.columns([0.6, 0.1])
     with cols[0]:
         st.subheader("Market Insight")
