@@ -173,16 +173,11 @@
 # conclusion = st.text_area("Summary and suggested action", height=100)
 
 
-
-
-
-
 import plotly.express as px
 import streamlit as st
 import pandas as pd
 import numpy as np
 import yfinance as yf
-import matplotlib.pyplot as plt
 
 # === SETTINGS ===
 START_DATE = "2010-01-01"
@@ -295,10 +290,11 @@ st.markdown(
 )
 st.markdown("---")
 
-# === MAIN BODY ===
-upper_col1, upper_col2, upper_col3 = st.columns([1.5, 1, 1])
+# === LAYOUT ===
+left_col, right_col = st.columns([2, 2])
 
-with upper_col1:
+# LEFT — Pie Chart and Portfolio Holdings below
+with left_col:
     if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
@@ -327,17 +323,17 @@ with upper_col1:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-with upper_col2:
-    st.markdown("### Market Insight")
-    interp = st.text_area("What are we seeing in the macro environment?", height=130)
-
-    st.markdown("### Strategy Note")
-    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
-
-with upper_col3:
-    st.markdown("### Trader's Conclusion")
-    conclusion = st.text_area("Summary and suggested action", height=130)
-
     st.markdown("### Portfolio Holdings")
     for asset, weight in current_alloc.items():
         st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+
+# RIGHT — Text Boxes (3 stacked)
+with right_col:
+    st.subheader("Market Insight")
+    interp = st.text_area("What are we seeing in the macro environment?", height=130)
+
+    st.subheader("Strategy Note")
+    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+
+    st.subheader("Trader's Conclusion")
+    conclusion = st.text_area("Summary and suggested action", height=130)
