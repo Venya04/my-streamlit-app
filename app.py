@@ -301,7 +301,6 @@
 #             st.text_area(placeholder, height=130)
 #         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
 
-
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -312,21 +311,29 @@ import yfinance as yf
 START_DATE = "2010-01-01"
 END_DATE = "2024-12-31"
 STABLECOIN_MONTHLY_YIELD = 0.05 / 12
-CASH_DAILY_YIELD = 0.045 / 12
+CASH_DAILY_YIELD = 0.045 / 252  # Trading days in year
 
 TICKERS = {
     "stocks": "SPY",
     "crypto": "BTC-USD",
     "commodities": "GLD",
-    "cash": None
+    "cash": None,
+    "stablecoins": None  # Add explicitly
 }
 
 st.set_page_config(page_title="Regime Report", layout="wide")
 
-# === LOAD PRICE DATA ===
+# === LOAD DATA ===
 @st.cache_data
 def load_csv_from_repo(path):
-    return pd.read_csv(path, parse_dates=["date"] if "regime" in path else None)
+    try:
+        df = pd.read_csv(path)
+        if "date" in df.columns:
+            df["date"] = pd.to_datetime(df["date"])
+        return df
+    except Exception as e:
+        st.error(f"Error loading {path}: {e}")
+        return pd.DataFrame()
 
 regime_df = load_csv_from_repo("regime_labels_expanded.csv")
 opt_alloc_df = load_csv_from_repo("optimal_allocations.csv")
@@ -337,16 +344,30 @@ def load_prices():
     for asset, ticker in TICKERS.items():
         if ticker:
             df = yf.download(ticker, start=START_DATE, end=END_DATE, progress=False)
-            df = df["Adj Close"] if "Adj Close" in df.columns else df["Close"]
-            data[asset] = df
+            if "Adj Close" in df.columns:
+                df = df["Adj Close"]
+            elif "Close" in df.columns:
+                df = df["Close"]
+            else:
+                continue
+            data[asset] = df.rename(asset)
     prices = pd.concat(data.values(), axis=1)
-    column_names = [k for k in data.keys() if data[k] is not None]
-    prices.columns = column_names
     return prices.dropna()
 
 prices = load_prices()
 
+# === VALIDATE DATA ===
+if prices.empty:
+    st.error("Price data failed to load. Please check your internet connection or ticker symbols.")
+    st.stop()
+
+if regime_df.empty or "regime" not in regime_df.columns:
+    st.error("Regime labels are missing or incorrectly formatted.")
+    st.stop()
+
+# === PREPARE REGIME + ALLOCATIONS ===
 regime_df.set_index("date", inplace=True)
+regime_df = regime_df.asfreq("D").ffill()
 regime_df = regime_df.reindex(prices.index, method="ffill")
 regime_df["regime"] = regime_df["regime"].str.capitalize()
 
@@ -358,10 +379,13 @@ for alloc in allocations.values():
     for k in alloc:
         alloc[k] = alloc[k] / total
 
+# === RETURNS ===
 returns = prices.pct_change().dropna()
 returns["cash"] = CASH_DAILY_YIELD
-returns["stablecoins"] = STABLECOIN_MONTHLY_YIELD
+daily_stablecoin_yield = (1 + STABLECOIN_MONTHLY_YIELD) ** (1 / 22) - 1
+returns["stablecoins"] = daily_stablecoin_yield
 
+# Fill missing asset returns with zeros
 all_assets = set()
 for regime_weights in allocations.values():
     all_assets.update(regime_weights.keys())
@@ -370,7 +394,7 @@ for asset in all_assets:
     if asset not in returns.columns:
         returns[asset] = 0.0
 
-# === BACKTEST ===
+# === BACKTEST FUNCTION ===
 def backtest(prices, returns, regime_df, allocations):
     portfolio_returns = []
     current_weights = {asset: 0.25 for asset in TICKERS.keys()}
@@ -399,7 +423,6 @@ current_alloc = allocations.get(current_regime, {})
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
-
     .gothic-title {
         font-family: 'UnifrakturCook', serif;
         text-align: center;
@@ -524,13 +547,13 @@ with right_col:
         </style>
     """, unsafe_allow_html=True)
 
-    # for title, placeholder in [
-    #     ("Market Insight", "What are we seeing in the macro environment?"),
-    #     ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
-    #     ("Trader's Conclusion", "Summary and suggested action")
-    # ]:
-    #     cols = st.columns([0.9, 0.1])
-    #     with cols[0]:
-    #         st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-    #         st.text_area(placeholder, height=130, label_visibility="collapsed")
-    #     st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
+    for title, placeholder in [
+        ("Market Insight", "What are we seeing in the macro environment?"),
+        ("Top Strategy Note", "Thoughts on the market (e.g., technical signals)"),
+        ("Trader's Conclusion", "Summary and suggested action")
+    ]:
+        cols = st.columns([0.9, 0.1])
+        with cols[0]:
+            st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
+            st.text_area(placeholder, height=130, label_visibility="collapsed")
+        st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
