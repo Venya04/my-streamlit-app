@@ -172,7 +172,7 @@ with left_col:
     # for asset, weight in current_alloc.items():
     #     st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 st.markdown("""
-<div style='margin-top: 20px; margin-left: 100px;'>
+<div style='margin-top: -30px; margin-left: 100px;'>
     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
     <ul style='padding-left: 20px;'>
 """ + "".join([
