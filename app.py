@@ -331,9 +331,12 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    st.markdown("### Portfolio Holdings")
-    for asset, weight in current_alloc.items():
-        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+    # Horizontal bullet layout using custom HTML and inline CSS
+bullets = " ".join([
+    f"<span style='margin-right: 20px;'>• <strong>{asset.capitalize()}</strong>: {weight:.1%}</span>"
+    for asset, weight in current_alloc.items()
+])
+st.markdown(f"<div style='display: flex; flex-wrap: wrap;'>{bullets}</div>", unsafe_allow_html=True)
 
 # RIGHT — Text Boxes (3 stacked)
 with right_col:
