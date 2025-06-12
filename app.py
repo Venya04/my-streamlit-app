@@ -174,7 +174,7 @@ with st.container():
 
         # Centered Portfolio Holdings below the chart only
        st.markdown("""
-<div style='text-align: center; margin-top: -10px;'>
+<div style='text-align: left; margin-top: -10px;'>
     <h4 style='margin-bottom: 5px;'>Portfolio Holdings</h4>
     <div style='
         display: inline-block;
