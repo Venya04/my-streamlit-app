@@ -129,7 +129,7 @@ left_col, right_col = st.columns([2, 2])
 # LEFT — Pie Chart and Portfolio Holdings below
 # === Pie chart and aligned holdings ===
 with st.container():
-    chart_col, info_col = st.columns([4, 4])  # narrower right side to balance whitespace
+    chart_col, info_col = st.columns([6, 4])  # narrower right side to balance whitespace
     with chart_col:
         # Pie chart
         if current_alloc:
