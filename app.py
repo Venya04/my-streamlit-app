@@ -428,7 +428,7 @@ with left_col:
     """, unsafe_allow_html=True)
 
 with right_col:
-    right_box_style = """
+    st.markdown("""
         <style>
             .section-title {
                 font-family: Georgia, serif;
@@ -441,8 +441,7 @@ with right_col:
                 padding-bottom: 4px;
             }
         </style>
-    """
-    st.markdown(right_box_style, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     cols = st.columns([0.6, 0.1])
     with cols[0]:
@@ -462,5 +461,4 @@ with right_col:
     with cols[0]:
         st.markdown("<div class='section-title'>Trader's Conclusion</div>", unsafe_allow_html=True)
         conclusion = st.text_area("Summary and suggested action", height=130)
-
 
