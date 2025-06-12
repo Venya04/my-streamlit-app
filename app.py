@@ -95,7 +95,7 @@ current_alloc = allocations.get(current_regime, {})
 st.markdown(
     """
     <style>
-   @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
 
     .gothic-title {
