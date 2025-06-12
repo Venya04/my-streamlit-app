@@ -178,7 +178,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import yfinance as yf
-import matplotlib.pyplot as plt
 
 # === SETTINGS ===
 START_DATE = "2010-01-01"
@@ -281,9 +280,17 @@ st.markdown(
         padding: 0.5rem 0;
         letter-spacing: 1px;
     }
+    .edition-line {
+        font-family: Georgia, serif;
+        text-align: center;
+        font-size: 14px;
+        color: gray;
+        margin-top: -12px;
+    }
     </style>
     <div class='gothic-title'>The Regime Report</div>
-    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
+    <div class='edition-line'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
+    <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -5px;'>
         Asset Allocation in Current Market Conditions
     </h3>
     """,
@@ -291,56 +298,56 @@ st.markdown(
 )
 st.markdown("---")
 
-# === MAIN VISUAL (PIE + HOLDINGS) ===
-main_left, main_right = st.columns([2, 1])
+# === MAIN BODY ===
+left_col, right_col = st.columns([2, 1])
 
-with main_left:
-    if current_alloc:
-        fig_pie = px.pie(
-            names=list(current_alloc.keys()),
-            values=list(current_alloc.values()),
-            hole=0.0,
-            color=list(current_alloc.keys()),
-            color_discrete_map={
-                "stocks": "#00bf63",
-                "stablecoins": "#ff5757",
-                "cash": "#ff3131",
-                "crypto": "#25a159",
-                "commodities": "#f4b70f",
-            }
-        )
-        fig_pie.update_traces(
-            textinfo='percent',
-            textfont_size=16,
-            pull=[0.03] * len(current_alloc),
-            marker=dict(line=dict(color="#000000", width=2))
-        )
-        fig_pie.update_layout(
-            showlegend=False,
-            margin=dict(t=10, b=10, l=10, r=10),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
+with left_col:
+    pie_col, holdings_col = st.columns([2, 1])
 
-with main_right:
-    st.markdown("### Portfolio Holdings")
-    for asset, weight in current_alloc.items():
-        st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
+    with pie_col:
+        if current_alloc:
+            fig_pie = px.pie(
+                names=list(current_alloc.keys()),
+                values=list(current_alloc.values()),
+                hole=0.0,
+                color=list(current_alloc.keys()),
+                color_discrete_map={
+                    "stocks": "#00bf63",
+                    "stablecoins": "#ff5757",
+                    "cash": "#ff3131",
+                    "crypto": "#25a159",
+                    "commodities": "#f4b70f",
+                }
+            )
+            fig_pie.update_traces(
+                textinfo='percent',
+                textfont_size=16,
+                pull=[0.03] * len(current_alloc),
+                marker=dict(line=dict(color="#000000", width=2))
+            )
+            fig_pie.update_layout(
+                showlegend=False,
+                margin=dict(t=10, b=10, l=10, r=10),
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+            )
+            st.plotly_chart(fig_pie, use_container_width=True)
 
-# === INTERPRETATION AND OUTLOOK (SIDE BY SIDE) ===
-interpret_col, outlook_col = st.columns([1, 1])
-with interpret_col:
-    st.subheader("Interpretation of Data")
-    interp = st.text_area("What are we seeing in the macro environment?", height=150)
+    with holdings_col:
+        st.markdown("### Portfolio Holdings")
+        for asset, weight in current_alloc.items():
+            st.markdown(f"- **{asset.capitalize()}**: {weight:.1%}")
 
-with outlook_col:
-    st.subheader("Personal Outlook")
-    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=150)
+with right_col:
+    st.markdown("### Market Insight")
+    interp = st.text_area("What are we seeing in the macro environment?", height=130)
 
-# === CONCLUSION ===
+    st.markdown("### Strategy Note")
+    outlook = st.text_area("Thoughts on the market (e.g., technical signals)", height=130)
+
 st.markdown("---")
-st.subheader("Conclusion")
+st.subheader("Trader's Conclusion")
 conclusion = st.text_area("Summary and suggested action", height=100)
+
 
 
