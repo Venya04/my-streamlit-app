@@ -428,6 +428,22 @@ with left_col:
     """, unsafe_allow_html=True)
 
 with right_col:
+    right_box_style = """
+        <style>
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 18px;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 6px;
+                color: #d4af37; /* light gold */
+                border-bottom: 1px solid #555;
+                padding-bottom: 4px;
+            }
+        </style>
+    """
+    st.markdown(right_box_style, unsafe_allow_html=True)
+
     cols = st.columns([0.6, 0.1])
     with cols[0]:
         st.markdown("<div class='section-title'>Market Insight</div>", unsafe_allow_html=True)
