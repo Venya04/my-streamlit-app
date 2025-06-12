@@ -548,10 +548,11 @@ with right_col:
         cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.markdown(
-                "<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>",
-                unsafe_allow_html=True
-            )
+           st.markdown(
+    "<div style='text-align:center; font-size: 14px; color: #d4af37; margin-top: 4px; margin-bottom: 12px;'>❧❧❧</div>",
+    unsafe_allow_html=True
+)
+
             st.text_area(placeholder, height=130, label_visibility="collapsed")
 
 
