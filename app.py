@@ -339,6 +339,7 @@ regime_df = load_csv_from_repo("regime_labels_expanded.csv")
 opt_alloc_df = load_csv_from_repo("optimal_allocations.csv")
 
 @st.cache_data
+@st.cache_data
 def load_prices():
     data = {}
     for asset, ticker in TICKERS.items():
@@ -350,8 +351,12 @@ def load_prices():
                 df = df["Close"]
             else:
                 continue
-            data[asset] = df.rename(asset)
+            df = df.to_frame(name=asset)  # <-- Fix: convert to DataFrame with asset name
+            data[asset] = df
+    if not data:
+        return pd.DataFrame()
     return pd.concat(data.values(), axis=1).dropna()
+
 
 prices = load_prices()
 
