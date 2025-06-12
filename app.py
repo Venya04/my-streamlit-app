@@ -399,10 +399,11 @@ current_alloc = allocations.get(current_regime, {})
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
     .gothic-title {
         font-family: 'UnifrakturCook', serif;
         text-align: center;
-        font-size: 3.5vw;
+        font-size: 3.5rem;
         font-weight: bold;
         padding: 0.5rem 0;
         letter-spacing: 1px;
@@ -410,13 +411,9 @@ st.markdown("""
     .pub-info {
         text-align: center;
         font-family: 'Georgia', serif;
-        font-size: 1vw;
+        font-size: 0.8rem;
         margin-top: -18px;
         color: #ccc;
-    }
-    @media (max-width: 768px) {
-        .gothic-title { font-size: 6vw; }
-        .pub-info { font-size: 2.5vw; }
     }
     </style>
     <div class='gothic-title'>The Regime Report</div>
@@ -426,20 +423,39 @@ st.markdown("""
     </h3>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+        .block-container {
+            padding-left: 5vw;
+            padding-right: 5vw;
+        }
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: #d4af37;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # === LAYOUT ===
 left_col, right_col = st.columns([1.3, 1])
 
 with left_col:
     st.markdown("""
         <style>
-        .left-section-title {
-            font-family: Georgia, serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            text-align: center;
-        }
+            .left-section-title {
+                font-family: Georgia, serif;
+                font-size: 1.1rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                text-align: center;
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -472,31 +488,34 @@ with left_col:
         st.plotly_chart(fig_pie, use_container_width=True)
 
     st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
-    st.markdown("""
+    st.markdown(
+        """
         <div style='text-align: center; margin-top: -5px;'>
             <ul style='padding-left: 10; list-style-position: inside; text-align: left; display: inline-block;'>
-    """ + """".join([
-        f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
-        for asset, weight in current_alloc.items()
-    ]) + """
+        """ + """".join([
+            f"<li><strong>{asset.capitalize()}</strong>: {weight:.1%}</li>"
+            for asset, weight in current_alloc.items()
+        ]) + """
             </ul>
         </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
 with right_col:
     st.markdown("""
         <style>
-        .section-title {
-            font-family: Georgia, serif;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            text-align: left;
-            color: white;
-            border-bottom: 1px solid #555;
-            padding-bottom: 4px;
-        }
+            .section-title {
+                font-family: Georgia, serif;
+                font-size: 1.1rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                margin-bottom: 10px;
+                text-align: left;
+                color: white;
+                border-bottom: 1px solid #555;
+                padding-bottom: 4px;
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -510,7 +529,3 @@ with right_col:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130, label_visibility="collapsed")
         st.markdown("<div style='margin-bottom: 30px;'></div>", unsafe_allow_html=True)
-
-
-
-
