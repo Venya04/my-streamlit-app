@@ -524,10 +524,10 @@ with left_col:
     )
 
 with right_col:
-    st.markdown("""
+   st.markdown("""
     <style>
         .section-title {
-            font-family: 'Georgia', serif;
+            font-family: Georgia, serif;
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
@@ -536,15 +536,9 @@ with right_col:
             border-bottom: 1px solid #555;
             padding-bottom: 4px;
         }
-        .section-box {
-            border: 1px solid #444;
-            padding: 16px;
-            border-radius: 6px;
-            background-color: rgba(255,255,255,0.02);
-            margin-bottom: 20px;
-        }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+
 
     sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
