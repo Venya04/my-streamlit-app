@@ -520,20 +520,21 @@ with left_col:
     )
 
 with right_col:
-    st.markdown("""
-        <style>
-            .section-title {
-                font-family: Georgia, serif;
-                font-size: 18px;
-                font-weight: bold;
-                text-transform: uppercase;
-                margin-bottom: 6px;
-                color: white;
-                border-bottom: 1px solid #555;
-                padding-bottom: 4px;
-            }
-        </style>
-    """, unsafe_allow_html=True)
+   st.markdown("""
+<style>
+.section-title {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: white;
+    border-bottom: 1px solid #555;
+    padding-bottom: 4px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
     sections = [
         ("Market Insight", "What are we seeing in the macro environment?"),
