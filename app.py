@@ -313,8 +313,6 @@
 
 
 
-
-
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -413,6 +411,7 @@ st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
     .gothic-title {
         font-family: 'UnifrakturCook', serif;
         text-align: center;
@@ -428,34 +427,34 @@ st.markdown(
         margin-top: -18px;
         color: #ccc;
     }
-    body, .stText, .stMarkdown, .stTextInput textarea {
-        font-family: 'Georgia', serif;
-        color: white;
-    }
-    .main {
-        background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-        background-repeat: repeat;
-    }
-    .block-container {
-        padding-left: 10rem;
-        padding-right: 10rem;
-    }
-    .section-title {
-        font-family: Georgia, serif;
-        font-size: 18px;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-        color: white;
-        border-bottom: 1px solid #555;
-        padding-bottom: 4px;
-    }
     </style>
     <div class='gothic-title'>The Regime Report</div>
     <div class='pub-info'>No. 01 · Published biWeekly · Market Bulletin · June 2025</div>
     <h3 style='text-align: center; font-family: Georgia, serif; font-style: italic; margin-top: -10px;'>
         Asset Allocation in Current Market Conditions
     </h3>
+    """,
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <style>
+        .block-container {
+            padding-left: 10rem;
+            padding-right: 10rem;
+        }
+        .section-title {
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: #d4af37;
+            border-bottom: 1px solid #555;
+            padding-bottom: 4px;
+        }
+    </style>
     """,
     unsafe_allow_html=True
 )
@@ -473,12 +472,10 @@ with left_col:
                 text-transform: uppercase;
                 margin-bottom: 10px;
                 text-align: center;
-                color: white;
             }
         </style>
     """, unsafe_allow_html=True)
 
-    # === PIE CHART ===
     if current_alloc:
         fig_pie = px.pie(
             names=list(current_alloc.keys()),
@@ -507,7 +504,6 @@ with left_col:
         )
         st.plotly_chart(fig_pie, use_container_width=True)
 
-    # === PORTFOLIO HOLDINGS ===
     st.markdown("<div class='left-section-title'>Portfolio Holdings</div>", unsafe_allow_html=True)
     st.markdown(
         """
@@ -549,11 +545,12 @@ with right_col:
         cols = st.columns([0.6, 0.1])
         with cols[0]:
             st.markdown(f"<div class='section-title'>{title}</div>", unsafe_allow_html=True)
-            st.markdown(
-                "<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>",
-                unsafe_allow_html=True
-            )
+            st.markdown("<hr style='border: none; height: 1px; background: #888; margin-top: -6px; margin-bottom: 10px;'>", unsafe_allow_html=True)
             st.text_area(placeholder, height=130, label_visibility="collapsed")
 
-
-
+# === FOOTER ===
+st.markdown(f"""
+    <div style='text-align: center; font-size: 12px; color: #777; padding-top: 2rem; font-family: Georgia, serif;'>
+        © Regime Report · BiWeekly Edition · Compiled {pd.to_datetime("today").strftime("%B %d, %Y")}
+    </div>
+""", unsafe_allow_html=True)
