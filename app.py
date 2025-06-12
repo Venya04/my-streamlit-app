@@ -322,7 +322,8 @@ with right_col:
             padding: 16px;
             border-radius: 6px;
             background-color: rgba(255,255,255,0.08);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
     </style>
     """, unsafe_allow_html=True)
@@ -334,11 +335,12 @@ with right_col:
     ]
 
     for title, placeholder in sections:
-        cols = st.columns([0.6, 0.1])
+        cols = st.columns([0.95, 0.05])  # Slightly wider for better visual alignment
         with cols[0]:
             st.markdown(f"""
                 <div class='section-box'>
                     <div class='section-title'>{title}</div>
             """, unsafe_allow_html=True)
-            st.text_area(placeholder, height=130, label_visibility="collapsed")
-            st.markdown("</div>", unsafe_allow_html=True)  # Close section-box
+            st.text_area(label=placeholder, height=130, label_visibility="collapsed")
+            st.markdown("</div>", unsafe_allow_html=True)
+
